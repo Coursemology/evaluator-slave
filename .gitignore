@@ -8,6 +8,12 @@
 /.bundle
 /vendor/bundle
 
+# Ignore user-specific Intellij project files
+/.idea/dictionaries/*
+/.idea/.rakeTasks
+/.idea/.generators
+/.idea/workspace.xml
+
 # Ignore generated code coverage information
 /spec/coverage/*
 /coverage/*
