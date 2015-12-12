@@ -1,4 +1,14 @@
+sudo: false
 language: ruby
 rvm:
-  - 2.2.4
-before_install: gem install bundler -v 1.10.6
+  - 2.1.7
+  - 2.2.3
+  - ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+bundler_args: "--jobs=3 --retry=3 --deployment"
+cache: bundler
+
+before_install:
+  - gem update bundler
