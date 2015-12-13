@@ -7,3 +7,6 @@
 # Ignore bundler config and gems.
 /.bundle
 /vendor/bundle
+
+# Ignore RSpec state
+/spec/examples.txt
