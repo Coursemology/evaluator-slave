@@ -19,6 +19,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'coverage_helper'
 require 'coursemology/evaluator'
+Dir["#{__dir__}/support/**/*"].each { |file| require file }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
