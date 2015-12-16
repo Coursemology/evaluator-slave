@@ -20,4 +20,14 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
       end
     end
   end
+
+  describe '#package' do
+    let(:evaluation) { Coursemology::Evaluator::Models::ProgrammingEvaluation.find(3) }
+
+    it 'obtains the requested package' do
+      VCR.use_cassette 'programming_evaluation/package' do
+        expect(evaluation.package).to be_a(String)
+      end
+    end
+  end
 end

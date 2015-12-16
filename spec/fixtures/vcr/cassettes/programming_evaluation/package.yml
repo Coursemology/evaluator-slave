@@ -1,0 +1,173 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-type:
+      - application/json; charset=utf-8
+      cache-control:
+      - no-store, must-revalidate, private, max-age=0
+      x-request-id:
+      - 9cfcd480-2827-4ac1-8c00-b19674dbe372
+      x-runtime:
+      - '0.462651'
+      x-miniprofiler-ids:
+      - '["nluzcn8efynh6p1p6bsk"]'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-06)
+      date:
+      - Sun, 20 Dec 2015 23:59:10 GMT
+      content-length:
+      - '96'
+      connection:
+      - Keep-Alive
+      set-cookie:
+      - __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/
+    body:
+      encoding: UTF-8
+      string: '{"id":3,"language":"Polyglot::Language::Python::Python2Point7","memory_limit":32,"time_limit":5}'
+    http_version: 
+  recorded_at: Sun, 20 Dec 2015 23:59:11 GMT
+- request:
+    method: get
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/3/package
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 302
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      location:
+      - http://localhost:3000/downloads/d20151221-7356-23qufp/programming-import20151221-7356-1cysvr4
+      content-type:
+      - text/html; charset=utf-8
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 411abbf1-f768-4a6e-be53-1ac5a79e13bd
+      x-runtime:
+      - '0.367925'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-06)
+      date:
+      - Sun, 20 Dec 2015 23:59:12 GMT
+      content-length:
+      - '159'
+      connection:
+      - Keep-Alive
+      set-cookie:
+      - __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="http://localhost:3000/downloads/d20151221-7356-23qufp/programming-import20151221-7356-1cysvr4">redirected</a>.</body></html>
+    http_version: 
+  recorded_at: Sun, 20 Dec 2015 23:59:13 GMT
+- request:
+    method: get
+    uri: http://localhost:3000/downloads/d20151221-7356-23qufp/programming-import20151221-7356-1cysvr4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      last-modified:
+      - Sun, 20 Dec 2015 23:58:04 GMT
+      content-type:
+      - text/plain
+      content-length:
+      - '564'
+      cache-control:
+      - no-store, must-revalidate, private, max-age=0
+      x-miniprofiler-ids:
+      - '["kkk4pzhbb8gdw4vfdkbk","nluzcn8efynh6p1p6bsk","bzh7gvapkh9f3tbksdq"]'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-06)
+      date:
+      - Sun, 20 Dec 2015 23:59:14 GMT
+      connection:
+      - Keep-Alive
+      set-cookie:
+      - __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        UEsDBAoAAAAAAKt7iEcAAAAAAAAAAAAAAAAIAAAATWFrZWZpbGVQSwMEFAAA
+        AAAAs3uIRwAAAAAAAAAAAAAAAAsAAABzdWJtaXNzaW9uL1BLAwQKAAAAAAC1
+        e4hHAAAAAAAAAAAAAAAAFgAAAHN1Ym1pc3Npb24vX19pbml0X18ucHlQSwME
+        FAAAAAAAsHuIRwAAAAAAAAAAAAAAAAYAAAB0ZXN0cy9QSwECPwAKAAAAAACr
+        e4hHAAAAAAAAAAAAAAAACAAkAAAAAAAAACAAAAAAAAAATWFrZWZpbGUKACAA
+        AAAAAAEAGAA8WkUnijHRATxaRSeKMdEBPFpFJ4ox0QFQSwECPwAUAAAAAACz
+        e4hHAAAAAAAAAAAAAAAACwAkAAAAAAAAABAAAAAmAAAAc3VibWlzc2lvbi8K
+        ACAAAAAAAAEAGAAg0+MwijHRASDT4zCKMdEBINPjMIox0QFQSwECPwAKAAAA
+        AAC1e4hHAAAAAAAAAAAAAAAAFgAkAAAAAAAAACAAAABPAAAAc3VibWlzc2lv
+        bi9fX2luaXRfXy5weQoAIAAAAAAAAQAYANf2ATSKMdEB1/YBNIox0QHX9gE0
+        ijHRAVBLAQI/ABQAAAAAALB7iEcAAAAAAAAAAAAAAAAGACQAAAAAAAAAEAAA
+        AIMAAAB0ZXN0cy8KACAAAAAAAAEAGADwz2UtijHRAfDPZS2KMdEB8M9lLYox
+        0QFQSwUGAAAAAAQABAB3AQAApwAAAAAA
+    http_version: 
+  recorded_at: Sun, 20 Dec 2015 23:59:14 GMT
+recorded_with: VCR 3.0.0
