@@ -1,12 +1,16 @@
 class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Evaluator::Models::Base
+  extend ActiveSupport::Autoload
+  autoload :Package
+
   get :find, 'courses/assessment/programming_evaluations/:id'
   post :allocate, 'courses/assessment/programming_evaluations/allocate'
 
-  # Obtains the package as a string.
+  # Obtains the package.
   #
-  # @return [String]
+  # @return [Coursemology::Evaluator::Models::ProgrammingEvaluation::Package]
   def package
-    plain_request('courses/assessment/programming_evaluations/:id/package', id: id)
+    body = plain_request('courses/assessment/programming_evaluations/:id/package', id: id)
+    Package.new(StringIO.new(body))
   end
 
   private

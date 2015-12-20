@@ -26,7 +26,8 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
 
     it 'obtains the requested package' do
       VCR.use_cassette 'programming_evaluation/package' do
-        expect(evaluation.package).to be_a(String)
+        expect(evaluation.package).to \
+          be_a(Coursemology::Evaluator::Models::ProgrammingEvaluation::Package)
       end
     end
   end
