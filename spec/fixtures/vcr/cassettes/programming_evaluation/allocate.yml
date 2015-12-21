@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/allocate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-type:
+      - application/json; charset=utf-8
+      cache-control:
+      - no-store, must-revalidate, private, max-age=0
+      x-request-id:
+      - 1aab36e3-8686-4401-a6fc-68c826d0aa87
+      x-runtime:
+      - '1.329488'
+      x-miniprofiler-ids:
+      - '["b33x4y8wpk341vcv4y30","wv0nqz5k610ynte73hks"]'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-06)
+      date:
+      - Sun, 20 Dec 2015 12:05:20 GMT
+      content-length:
+      - '98'
+      connection:
+      - Keep-Alive
+      set-cookie:
+      - __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/
+    body:
+      encoding: UTF-8
+      string: '[{"id":2,"language":"Polyglot::Language::Python::Python2Point7","memory_limit":32,"time_limit":5}]'
+    http_version: 
+  recorded_at: Sun, 20 Dec 2015 12:05:21 GMT
+recorded_with: VCR 3.0.0

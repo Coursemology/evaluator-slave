@@ -3,11 +3,11 @@ RSpec.describe Coursemology::Evaluator::Models::Base do
     subject { Coursemology::Evaluator::Models::Base }
 
     describe '.api_user_email' do
-      it { is_expected.to have_attributes(api_user_email: nil) }
+      it { is_expected.to have_attributes(api_user_email: anything) }
     end
 
     describe '.api_token' do
-      it { is_expected.to have_attributes(api_token: nil) }
+      it { is_expected.to have_attributes(api_token: anything) }
     end
   end
 

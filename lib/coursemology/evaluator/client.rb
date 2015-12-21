@@ -3,6 +3,8 @@ class Coursemology::Evaluator::Client
     Coursemology::Evaluator::Models::Base.base_url = host
     Coursemology::Evaluator::Models::Base.api_user_email = api_user_email
     Coursemology::Evaluator::Models::Base.api_token = api_token
+
+    Coursemology::Evaluator::Models::Base.initialize
   end
 
   def initialize
