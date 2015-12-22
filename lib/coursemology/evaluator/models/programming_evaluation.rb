@@ -9,8 +9,10 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
   #
   # @return [Coursemology::Evaluator::Models::ProgrammingEvaluation::Package]
   def package
-    body = plain_request('courses/assessment/programming_evaluations/:id/package', id: id)
-    Package.new(StringIO.new(body))
+    @package ||= begin
+      body = plain_request('courses/assessment/programming_evaluations/:id/package', id: id)
+      Package.new(StringIO.new(body))
+    end
   end
 
   private
