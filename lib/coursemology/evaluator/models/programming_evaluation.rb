@@ -15,6 +15,18 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
     end
   end
 
+  # Evaluates the package, and stores the result in this record.
+  #
+  # Call {Coursemology::Evaluator::Models::ProgrammingEvaluation#save} to save the record to the
+  # server.
+  def evaluate
+    result = Coursemology::Evaluator::Services::EvaluateProgrammingPackageService.
+             execute(package)
+    self.stdout = result.stdout
+    self.stderr = result.stderr
+    self.test_report = result.test_report
+  end
+
   private
 
   # Performs a plain request.

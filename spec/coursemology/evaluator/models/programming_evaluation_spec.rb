@@ -39,4 +39,19 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
       end
     end
   end
+
+  describe '#evaluate' do
+    subject { build(:programming_evaluation) }
+    it 'sets the stdout attribute' do
+      expect { subject.evaluate }.to change { subject.stdout }
+    end
+
+    it 'sets the stderr attribute' do
+      expect { subject.evaluate }.to change { subject.stderr }
+    end
+
+    it 'sets the test_report attribute' do
+      expect { subject.evaluate }.to change { subject.test_report }
+    end
+  end
 end

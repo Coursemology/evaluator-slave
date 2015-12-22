@@ -9,4 +9,5 @@ module Coursemology::Evaluator
   autoload :Client
   autoload :CLI
   autoload :Models
+  autoload :Services
 end
