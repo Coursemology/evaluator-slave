@@ -1,5 +1,6 @@
 RSpec.describe Coursemology::Evaluator::CLI do
   let(:host) { 'http://localhost:3000' }
+  let!(:original_api_token) { Coursemology::Evaluator::Models::Base.api_token }
   let(:api_token) { 'abcd' }
   let(:api_user_email) { 'test@example.org' }
   let(:argv) do
@@ -22,16 +23,18 @@ RSpec.describe Coursemology::Evaluator::CLI do
     describe '#start' do
       subject { Coursemology::Evaluator::CLI.new }
       it 'calls #run' do
-        expect(subject).to receive(:run).and_call_original
+        expect(subject).to receive(:run)
         subject.start(argv)
       end
     end
 
     describe '#run' do
+      let(:api_token) { original_api_token }
       subject { Coursemology::Evaluator::CLI.new.run(argv) }
 
       it 'creates a client' do
-        expect(Coursemology::Evaluator::Client).to receive(:new).and_call_original
+        mock_client = double(run: nil)
+        expect(Coursemology::Evaluator::Client).to receive(:new).and_return(mock_client)
         subject
       end
 
