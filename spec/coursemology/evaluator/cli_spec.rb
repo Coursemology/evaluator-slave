@@ -4,7 +4,8 @@ RSpec.describe Coursemology::Evaluator::CLI do
   let(:api_token) { 'abcd' }
   let(:api_user_email) { 'test@example.org' }
   let(:argv) do
-    ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}"]
+    ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
+     '--one-shot']
   end
 
   describe Coursemology::Evaluator::CLI::Options do
@@ -33,14 +34,17 @@ RSpec.describe Coursemology::Evaluator::CLI do
       subject { Coursemology::Evaluator::CLI.new.run(argv) }
 
       it 'creates a client' do
-        mock_client = double(run: nil)
-        expect(Coursemology::Evaluator::Client).to receive(:new).and_return(mock_client)
-        subject
+        expect(Coursemology::Evaluator::Client).to receive(:new).and_call_original
+        VCR.use_cassette('client/no_pending_evaluations') do
+          subject
+        end
       end
 
       it 'runs the client' do
         expect(Coursemology::Evaluator::Client).to receive_message_chain(:new, :run)
-        subject
+        VCR.use_cassette('client/no_pending_evaluations') do
+          subject
+        end
       end
     end
   end

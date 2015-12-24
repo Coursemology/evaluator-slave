@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/allocate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-type:
+      - application/json; charset=utf-8
+      cache-control:
+      - no-store, must-revalidate, private, max-age=0
+      x-request-id:
+      - 56109927-259f-413d-8dbb-95f02dc1e3e7
+      x-runtime:
+      - '0.580646'
+      x-miniprofiler-ids:
+      - '["g61697empnv3cyhwvvlu","sv2daht3quq3ti4jvvg5","uv84uouoadr9cjoxx5df","vzn03ouf207zi8ixeyqu","ezc78yubvk6fv8mnklhu","5rc1ta39wdyj0fv8dh6z","w05805bb6qbjhekuariy","8wynqvhb8fmrem7vo261","vr7hm3zpbq6ftrubgyqj","ow31gd85uwp55l8a5vnq"]'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-06)
+      date:
+      - Tue, 22 Dec 2015 01:22:30 GMT
+      content-length:
+      - '2'
+      connection:
+      - Keep-Alive
+      set-cookie:
+      - __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Tue, 22 Dec 2015 01:22:30 GMT
+recorded_with: VCR 3.0.0

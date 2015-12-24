@@ -7,20 +7,19 @@ class Coursemology::Evaluator::Client
     Coursemology::Evaluator::Models::Base.initialize
   end
 
-  def initialize
-    @terminate = false
+  # @param [Boolean] one_shot If the client should only fire one request.
+  def initialize(one_shot = false)
+    @terminate = one_shot
   end
 
   def run
     Signal.trap('SIGTERM', method(:on_sig_term))
 
     loop do
-      if @terminate
-        break
-      else
-        allocate_evaluations
-        sleep(1.minute)
-      end
+      allocate_evaluations
+      break if @terminate
+
+      sleep(1.minute)
     end
   end
 

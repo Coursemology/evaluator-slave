@@ -1,7 +1,7 @@
 require 'optparse'
 
 class Coursemology::Evaluator::CLI
-  Options = Struct.new(:host, :api_token, :api_user_email)
+  Options = Struct.new(:host, :api_token, :api_user_email, :one_shot)
 
   def self.start(argv)
     new.start(argv)
@@ -15,7 +15,7 @@ class Coursemology::Evaluator::CLI
     options = optparse!(argv)
     Coursemology::Evaluator::Client.initialize(options.host, options.api_user_email,
                                                options.api_token)
-    Coursemology::Evaluator::Client.new.run
+    Coursemology::Evaluator::Client.new(options.one_shot).run
   end
 
   private
@@ -38,6 +38,10 @@ class Coursemology::Evaluator::CLI
 
       parser.on('-uUSER', '--api-user-email=USER') do |user|
         options.api_user_email = user
+      end
+
+      parser.on('-o', '--one-shot') do
+        options.one_shot = true
       end
     end
 
