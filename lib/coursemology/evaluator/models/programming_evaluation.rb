@@ -5,6 +5,25 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
   get :find, 'courses/assessment/programming_evaluations/:id'
   post :allocate, 'courses/assessment/programming_evaluations/allocate'
 
+  # Gets the language for the programming evaluation.
+  #
+  # @return [nil] If the language does not exist.
+  # @return [Coursemology::Polyglot::Language] The language that the evaluation uses.
+  def language
+    Coursemology::Polyglot::Language.find_by(type: super)
+  end
+
+  # Sets the language for the programming evaluation.
+  #
+  # @param [String|nil|Coursemology::Polyglot::Language] language The language to set. If this is
+  #   a string, it is assumed to be the class name of the language.
+  def language=(language)
+    return super(language) if language.nil? || language.is_a?(String)
+
+    fail ArgumentError unless language.is_a?(Coursemology::Polyglot::Language)
+    super(language.class.name)
+  end
+
   # Obtains the package.
   #
   # @return [Coursemology::Evaluator::Models::ProgrammingEvaluation::Package]
