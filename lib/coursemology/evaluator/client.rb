@@ -46,6 +46,7 @@ class Coursemology::Evaluator::Client
   # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation] evaluation The evaluation
   #   retrieved from the server.
   def on_evaluation(evaluation)
+    evaluation.evaluate
     evaluation.save
   end
 

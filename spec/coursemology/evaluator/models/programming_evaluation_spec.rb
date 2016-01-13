@@ -30,5 +30,28 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
           be_a(Coursemology::Evaluator::Models::ProgrammingEvaluation::Package)
       end
     end
+
+    it 'memoises its result' do
+      VCR.use_cassette 'programming_evaluation/package' do
+        expect(evaluation).to receive(:plain_request).and_call_original
+        evaluation.package
+        evaluation.package
+      end
+    end
+  end
+
+  describe '#evaluate' do
+    subject { build(:programming_evaluation) }
+    it 'sets the stdout attribute' do
+      expect { subject.evaluate }.to change { subject.stdout }
+    end
+
+    it 'sets the stderr attribute' do
+      expect { subject.evaluate }.to change { subject.stderr }
+    end
+
+    it 'sets the test_report attribute' do
+      expect { subject.evaluate }.to change { subject.test_report }
+    end
   end
 end

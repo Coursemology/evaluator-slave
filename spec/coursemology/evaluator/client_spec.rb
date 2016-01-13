@@ -36,10 +36,19 @@ RSpec.describe Coursemology::Evaluator::Client do
           receive(:allocate).and_return([dummy_evaluation])
       end
 
-      it 'calls #on_allocate with the evaluation' do
-        expect(subject).to receive(:on_allocate).with([dummy_evaluation]).and_call_original
+      it 'calls #on_evaluation with the evaluation' do
+        expect(subject).to receive(:on_evaluation).with(dummy_evaluation)
         subject.send(:allocate_evaluations)
       end
+    end
+  end
+
+  describe '#on_evaluation' do
+    let(:dummy_evaluation) { build(:programming_evaluation) }
+
+    it 'evaluates the evaluation' do
+      expect(dummy_evaluation).to receive(:evaluate)
+      subject.send(:on_evaluation, dummy_evaluation)
     end
   end
 
