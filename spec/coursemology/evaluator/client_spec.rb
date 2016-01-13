@@ -15,4 +15,42 @@ RSpec.describe Coursemology::Evaluator::Client do
       end
     end
   end
+
+  describe '#run' do
+    it 'loops until @terminate is set' do
+      expect(subject).to receive(:allocate_evaluations).at_least(:once)
+      allow(subject).to receive(:sleep) do
+        sleep(0.1.seconds)
+      end
+
+      Thread.new { subject.instance_variable_set(:@terminate, true) }
+      subject.run
+    end
+  end
+
+  describe '#allocate_evaluations' do
+    context 'when an evaluation is provided' do
+      let(:dummy_evaluation) { build(:programming_evaluation) }
+      before do
+        expect(Coursemology::Evaluator::Models::ProgrammingEvaluation).to \
+          receive(:allocate).and_return([dummy_evaluation])
+      end
+
+      it 'calls #on_allocate with the evaluation' do
+        expect(subject).to receive(:on_allocate).with([dummy_evaluation]).and_call_original
+        subject.send(:allocate_evaluations)
+      end
+    end
+  end
+
+  describe '#on_sig_term' do
+    it 'terminates the loop' do
+      expect(subject).to receive(:allocate_evaluations).at_least(:once)
+      allow(subject).to receive(:sleep) do
+        sleep(0.1.seconds)
+      end
+      Thread.new { subject.send(:on_sig_term) }
+      subject.run
+    end
+  end
 end
