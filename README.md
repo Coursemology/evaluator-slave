@@ -9,6 +9,7 @@ This is the evaluator program which will query Coursemology for pending evaluati
 
 1. Ruby (>= 2.1.0)
 2. Linux (tested on Ubuntu 14.04)
+3. Docker (the user the evaluator runs as must be able to talk to the Docker Remote API endpoint)
 
 ### Getting Started
 
