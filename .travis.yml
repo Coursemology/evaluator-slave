@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 language: ruby
 rvm:
   - 2.1.7
@@ -7,6 +7,8 @@ rvm:
 matrix:
   allow_failures:
     - rvm: ruby-head
+services:
+  - docker
 bundler_args: "--jobs=3 --retry=3 --deployment"
 cache: bundler
 

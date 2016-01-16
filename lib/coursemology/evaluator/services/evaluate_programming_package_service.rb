@@ -3,17 +3,18 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
   # Executes the given package in a container.
   #
-  # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation::Package] package The package
-  #   to evaluate.
+  # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation] evaluation The evaluation
+  #   from the server.
   # @return [Coursemology::Evaluator::Services::EvaluateProgrammingPackageService::Result] The
   #   result of the evaluation.
-  def self.execute(package)
-    new(package).send(:execute)
+  def self.execute(evaluation)
+    new(evaluation).send(:execute)
   end
 
   # Creates a new service object.
-  def initialize(package)
-    @package = package
+  def initialize(evaluation)
+    @evaluation = evaluation
+    @package = evaluation.package
   end
 
   private
