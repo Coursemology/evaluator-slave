@@ -1,7 +1,11 @@
 class Coursemology::Evaluator::Models::ProgrammingEvaluation::Package
+  # The stream comprising the package.
+  attr_reader :stream
+
   # Constructs a new Package.
   #
-  # @param [IO] io The IO object containing the package data.
-  def initialize(io)
+  # @param [IO] stream The stream comprising the package.
+  def initialize(stream)
+    @stream = stream
   end
 end

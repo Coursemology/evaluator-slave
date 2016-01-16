@@ -15,4 +15,10 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation::Package d
       package
     end
   end
+
+  describe '#stream' do
+    it 'returns the provided IO object' do
+      expect(package.stream).to be(file)
+    end
+  end
 end

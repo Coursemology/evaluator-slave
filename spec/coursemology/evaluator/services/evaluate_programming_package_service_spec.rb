@@ -25,4 +25,29 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
       container
     end
   end
+
+  describe '#copy_package' do
+    let(:container) { double }
+    it 'copies to the home directory' do
+      expect(container).to receive(:archive_in_stream).with(subject.class::HOME_PATH)
+      subject.send(:copy_package, container)
+    end
+  end
+
+  describe '#tar_package' do
+    let(:tar_stream) { subject.send(:tar_package, package.package) }
+    it 'resets the stream to the start' do
+      expect(tar_stream.tell).to eq(0)
+    end
+
+    it 'copies all files, prefixed with the package directory name' do
+      tar = Gem::Package::TarReader.new(tar_stream)
+      entries = []
+      tar.each do |entry|
+        entries << entry.full_name
+      end
+
+      expect(entries).to contain_exactly('package/Makefile', 'package/submission/__init__.py')
+    end
+  end
 end

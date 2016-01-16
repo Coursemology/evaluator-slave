@@ -6,7 +6,8 @@ FactoryGirl.define do
     time_limit 5
 
     after(:build) do |evaluation|
-      package = File.read(File.join(__dir__, '../fixtures/programming_question_template.zip'))
+      file = File.new(File.join(__dir__, '../fixtures/programming_question_template.zip'), 'rb')
+      package = Coursemology::Evaluator::Models::ProgrammingEvaluation::Package.new(file)
       evaluation.instance_variable_set(:@package, package)
     end
   end
