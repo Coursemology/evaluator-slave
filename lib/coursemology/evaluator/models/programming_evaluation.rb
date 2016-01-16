@@ -40,7 +40,7 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
   # server.
   def evaluate
     result = Coursemology::Evaluator::Services::EvaluateProgrammingPackageService.
-             execute(package)
+             execute(self)
     self.stdout = result.stdout
     self.stderr = result.stderr
     self.test_report = result.test_report
