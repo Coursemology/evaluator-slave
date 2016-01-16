@@ -30,4 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport', '~> 4.2.0'
   spec.add_dependency 'active_rest_client', '~> 1.2'
   spec.add_dependency 'faraday_middleware'
+
+  spec.add_dependency 'coursemology-polyglot', '>= 0.0.2'
 end

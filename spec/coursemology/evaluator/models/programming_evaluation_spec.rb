@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
+  subject { build(:programming_evaluation) }
+
   describe '.allocate' do
     let(:evaluation) { Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate.first }
     it 'obtains an unallocated evaluation' do
@@ -17,6 +19,35 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
     it 'obtains the requested evaluation' do
       VCR.use_cassette 'programming_evaluation/find' do
         expect(evaluation.id).to eq(find_id)
+      end
+    end
+  end
+
+  describe '#language' do
+    it 'returns an instance of Coursemology::Polyglot::Language' do
+      expect(subject.language).to be_a(Coursemology::Polyglot::Language)
+    end
+  end
+
+  describe '#language=' do
+    context 'when nil is given' do
+      it 'unsets the language' do
+        subject.language = nil
+        expect(subject.language).to be_nil
+      end
+    end
+
+    context 'when a language name is given' do
+      it 'sets the language' do
+        subject.language = Coursemology::Polyglot::Language::Python::Python2Point7.name
+        expect(subject.language).to be_a(Coursemology::Polyglot::Language::Python::Python2Point7)
+      end
+    end
+
+    context 'when a language instance is given' do
+      it 'sets the language' do
+        subject.language = Coursemology::Polyglot::Language::Python::Python2Point7.new
+        expect(subject.language).to be_a(Coursemology::Polyglot::Language::Python::Python2Point7)
       end
     end
   end
@@ -41,7 +72,6 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
   end
 
   describe '#evaluate' do
-    subject { build(:programming_evaluation) }
     it 'sets the stdout attribute' do
       expect { subject.evaluate }.to change { subject.stdout }
     end
