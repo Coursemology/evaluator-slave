@@ -50,4 +50,24 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
       expect(entries).to contain_exactly('package/Makefile', 'package/submission/__init__.py')
     end
   end
+
+  describe '#execute_package' do
+    let(:image) { 'python:2.7' }
+    let(:container) { subject.send(:create_container, image) }
+
+    def evaluate_result
+      expect(container).to receive(:start!).and_call_original
+      subject.send(:execute_package, container)
+    end
+
+    it 'evaluates the result' do
+      evaluate_result
+    end
+
+    it 'returns only when the container has stopped running' do
+      evaluate_result
+      container.refresh!
+      expect(container.info['State']['Running']).to be(false)
+    end
+  end
 end

@@ -7,6 +7,9 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   # The path to where the package will be extracted.
   PACKAGE_PATH = File.join(HOME_PATH, 'package')
 
+  # The path to where the test report will be at.
+  REPORT_PATH = File.join(PACKAGE_PATH, 'report.xml')
+
   # Executes the given package in a container.
   #
   # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation] evaluation The evaluation
@@ -96,6 +99,13 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   end
 
   def execute_package(container)
+    container.start!
+    container_state = container.info
+    while container_state.fetch('State', {}).fetch('Running', true)
+      container.wait
+      container.refresh!
+      container_state = container.info
+    end
   end
 
   def extract_test_report(container)
