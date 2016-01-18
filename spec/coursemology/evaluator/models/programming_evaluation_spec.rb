@@ -81,7 +81,6 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
     end
 
     it 'sets the test_report attribute' do
-      pending
       expect { subject.evaluate }.to change { subject.test_report }
     end
   end

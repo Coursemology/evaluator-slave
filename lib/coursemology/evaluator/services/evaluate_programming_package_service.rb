@@ -109,5 +109,15 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   end
 
   def extract_test_report(container)
+    stream = StringIO.new
+    container.archive_out(REPORT_PATH) do |bytes|
+      stream.write(bytes)
+    end
+
+    stream.seek(0)
+    tar_file = Gem::Package::TarReader.new(stream)
+    tar_file.each do |file|
+      return file.read
+    end
   end
 end

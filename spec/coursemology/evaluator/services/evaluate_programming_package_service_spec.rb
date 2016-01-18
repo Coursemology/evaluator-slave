@@ -70,4 +70,24 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
       expect(container.info['State']['Running']).to be(false)
     end
   end
+
+  describe '#extract_test_report' do
+    let(:image) { 'python:2.7' }
+    let(:report_path) { File.join(__dir__, '../../../fixtures/sample_report.xml') }
+    let(:report_contents) { File.read(report_path) }
+    let(:container) do
+      container = subject.send(:create_container, image)
+      container.start!
+      container.wait
+      tar = StringIO.new(Docker::Util.create_tar('report.xml' => report_contents))
+      container.archive_in_stream(Coursemology::Evaluator::Services::
+        EvaluateProgrammingPackageService::PACKAGE_PATH) do
+        tar.read
+      end
+    end
+
+    it 'returns the test report' do
+      expect(subject.send(:extract_test_report, container)).to eq(report_contents)
+    end
+  end
 end
