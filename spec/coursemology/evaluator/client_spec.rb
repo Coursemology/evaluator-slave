@@ -19,9 +19,7 @@ RSpec.describe Coursemology::Evaluator::Client do
   describe '#run' do
     it 'loops until @terminate is set' do
       expect(subject).to receive(:allocate_evaluations).at_least(:once)
-      allow(subject).to receive(:sleep) do
-        sleep(0.1.seconds)
-      end
+      allow(subject).to receive(:sleep) { sleep(0.1.seconds) }
 
       Thread.new { subject.instance_variable_set(:@terminate, true) }
       subject.run
@@ -55,9 +53,8 @@ RSpec.describe Coursemology::Evaluator::Client do
   describe '#on_sig_term' do
     it 'terminates the loop' do
       expect(subject).to receive(:allocate_evaluations).at_least(:once)
-      allow(subject).to receive(:sleep) do
-        sleep(0.1.seconds)
-      end
+      allow(subject).to receive(:sleep) { sleep(0.1.seconds) }
+
       Thread.new { subject.send(:on_sig_term) }
       subject.run
     end
