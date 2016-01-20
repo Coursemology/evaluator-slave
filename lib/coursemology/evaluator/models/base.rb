@@ -16,6 +16,7 @@ class Coursemology::Evaluator::Models::Base < ActiveRestClient::Base
     end
   end
 
+  verbose!
   before_request :add_authentication
 
   private

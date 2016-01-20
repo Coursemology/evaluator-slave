@@ -39,13 +39,16 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
     Result.new(container.logs(stdout: true), container.logs(stderr: true),
                extract_test_report(container))
   ensure
-    container.delete if container
+    destroy_container(container) if container
   end
 
   def create_container(image)
     image_identifier = "coursemology/evaluator-image-#{image}"
-    Docker::Image.create('fromImage' => image_identifier)
-    Docker::Container.create('Image' => image_identifier)
+    ActiveSupport::Notifications.instrument('create.docker.evaluator.coursemology',
+                                            image: image_identifier) do |payload|
+      Docker::Image.create('fromImage' => image_identifier)
+      payload[:container] = Docker::Container.create('Image' => image_identifier)
+    end
   end
 
   # Copies the contents of the package to the container.
@@ -118,6 +121,13 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
     tar_file = Gem::Package::TarReader.new(stream)
     tar_file.each do |file|
       return file.read
+    end
+  end
+
+  def destroy_container(container)
+    ActiveSupport::Notifications.instrument('destroy.docker.evaluator.coursemology',
+                                            container: container.id) do
+      container.delete
     end
   end
 end

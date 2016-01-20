@@ -24,6 +24,14 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
 
       container
     end
+
+    it 'instruments the creation' do
+      expect(Docker::Image).to receive(:create)
+      expect(Docker::Container).to receive(:create)
+
+      expect { subject.send(:create_container, image) }.to \
+        instrument_notification('create.docker.evaluator.coursemology')
+    end
   end
 
   describe '#copy_package' do
@@ -54,6 +62,7 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   describe '#execute_package' do
     let(:image) { 'python:2.7' }
     let(:container) { subject.send(:create_container, image) }
+    after { subject.send(:destroy_container, container) }
 
     def evaluate_result
       expect(container).to receive(:start!).and_call_original
@@ -85,9 +94,21 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
         tar.read
       end
     end
+    after { subject.send(:destroy_container, container) }
 
     it 'returns the test report' do
       expect(subject.send(:extract_test_report, container)).to eq(report_contents)
+    end
+  end
+
+  describe '#destroy_container' do
+    it 'instruments the destruction' do
+      container = double
+      allow(container).to receive(:delete)
+      allow(container).to receive(:id).and_return('')
+
+      expect { subject.send(:destroy_container, container) }.to \
+        instrument_notification('destroy.docker.evaluator.coursemology')
     end
   end
 end

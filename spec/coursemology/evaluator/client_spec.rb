@@ -38,6 +38,11 @@ RSpec.describe Coursemology::Evaluator::Client do
         expect(subject).to receive(:on_evaluation).with(dummy_evaluation)
         subject.send(:allocate_evaluations)
       end
+
+      it 'instruments the allocation request' do
+        expect { subject.send(:allocate_evaluations) }.to \
+          instrument_notification('allocate.client.evaluator.coursemology')
+      end
     end
   end
 
@@ -47,6 +52,16 @@ RSpec.describe Coursemology::Evaluator::Client do
     it 'evaluates the evaluation' do
       expect(dummy_evaluation).to receive(:evaluate)
       subject.send(:on_evaluation, dummy_evaluation)
+    end
+
+    it 'instruments the evaluation' do
+      expect { subject.send(:on_evaluation, dummy_evaluation) }.to \
+        instrument_notification('evaluate.client.evaluator.coursemology')
+    end
+
+    it 'instruments the save' do
+      expect { subject.send(:on_evaluation, dummy_evaluation) }.to \
+        instrument_notification('save.client.evaluator.coursemology')
     end
   end
 
