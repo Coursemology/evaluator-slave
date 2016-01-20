@@ -109,15 +109,27 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   end
 
   def extract_test_report(container)
+    stream = extract_test_report_archive(container)
+
+    tar_file = Gem::Package::TarReader.new(stream)
+    tar_file.each do |file|
+      return file.read
+    end
+  rescue Docker::Error::NotFoundError
+    return nil
+  end
+
+  # Extracts the test report from the container.
+  #
+  # @return [StringIO] The stream containing the archive, the pointer is reset to the start of the
+  #   stream.
+  def extract_test_report_archive(container)
     stream = StringIO.new
     container.archive_out(REPORT_PATH) do |bytes|
       stream.write(bytes)
     end
 
     stream.seek(0)
-    tar_file = Gem::Package::TarReader.new(stream)
-    tar_file.each do |file|
-      return file.read
-    end
+    stream
   end
 end
