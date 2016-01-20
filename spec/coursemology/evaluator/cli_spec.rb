@@ -46,6 +46,12 @@ RSpec.describe Coursemology::Evaluator::CLI do
           subject
         end
       end
+
+      it 'evaluates the package' do
+        VCR.use_cassette('client/pending_evaluation') do
+          subject
+        end
+      end
     end
   end
 

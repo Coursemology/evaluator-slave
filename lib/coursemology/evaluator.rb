@@ -17,6 +17,7 @@ module Coursemology::Evaluator
   autoload :Logging
   autoload :Models
   autoload :Services
+  autoload :StringIO
 
   # The logger to use for the client.
   mattr_reader(:logger) { ActiveSupport::Logger.new(STDOUT) }
