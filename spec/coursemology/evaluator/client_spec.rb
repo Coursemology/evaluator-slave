@@ -44,6 +44,20 @@ RSpec.describe Coursemology::Evaluator::Client do
           instrument_notification('allocate.client.evaluator.coursemology')
       end
     end
+
+    context 'when allocation fails' do
+      context 'when allocation fails due to a HTTP Unauthorized' do
+        with_mock_client(host: 'http://localhost:3000', api_user_email: '', api_token: '') do
+          it 'publishes the allocate_fail event' do
+            expect do
+              VCR.use_cassette('client/allocation_unauthorized') do
+                subject.send(:allocate_evaluations)
+              end
+            end.to publish_notification('allocate_fail.client.evaluator.coursemology')
+          end
+        end
+      end
+    end
   end
 
   describe '#on_evaluation' do

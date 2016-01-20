@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/allocate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - ''
+      X-User-Token:
+      - ''
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-type:
+      - application/json; charset=utf-8
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 2a843e10-83a6-4cd7-b418-c01addc07fce
+      x-runtime:
+      - '2.160943'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
+      date:
+      - Wed, 20 Jan 2016 11:04:32 GMT
+      content-length:
+      - '61'
+      connection:
+      - Keep-Alive
+    body:
+      encoding: UTF-8
+      string: '{"error":"You need to sign in or sign up before continuing."}'
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 11:04:32 GMT
+recorded_with: VCR 3.0.0
