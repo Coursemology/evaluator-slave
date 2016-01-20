@@ -2,6 +2,7 @@ require 'active_support/all'
 require 'active_rest_client'
 require 'faraday_middleware'
 require 'docker'
+require 'zip'
 Docker.validate_version!
 
 require 'coursemology/polyglot'
