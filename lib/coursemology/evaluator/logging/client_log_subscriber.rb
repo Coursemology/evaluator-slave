@@ -1,8 +1,4 @@
 class Coursemology::Evaluator::Logging::ClientLogSubscriber < ActiveSupport::LogSubscriber
-  def self.subscribe
-    attach_to(:'client.evaluator.coursemology')
-  end
-
   def publish(name, *args)
     send(name.split('.').first, *args)
   end
@@ -24,3 +20,5 @@ class Coursemology::Evaluator::Logging::ClientLogSubscriber < ActiveSupport::Log
     info color("Client: Save (#{event.duration.round(1)}ms)", GREEN)
   end
 end
+
+Coursemology::Evaluator::Logging::ClientLogSubscriber.attach_to(:'client.evaluator.coursemology')
