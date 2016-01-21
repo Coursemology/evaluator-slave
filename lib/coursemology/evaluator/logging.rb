@@ -1,12 +1,9 @@
 module Coursemology::Evaluator::Logging
   extend ActiveSupport::Autoload
 
-  autoload :ClientLogSubscriber
-  autoload :DockerLogSubscriber
-
-  def self.start
-    DockerLogSubscriber.subscribe
-    ClientLogSubscriber.subscribe
+  eager_autoload do
+    autoload :ClientLogSubscriber
+    autoload :DockerLogSubscriber
   end
 end
 

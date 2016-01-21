@@ -2,4 +2,5 @@
 require 'bundler/setup'
 require 'coursemology/evaluator'
 
+Coursemology::Evaluator.eager_load!
 Coursemology::Evaluator::CLI.start(ARGV)

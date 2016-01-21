@@ -1,8 +1,4 @@
 class Coursemology::Evaluator::Logging::DockerLogSubscriber < ActiveSupport::LogSubscriber
-  def self.subscribe
-    attach_to(:'docker.evaluator.coursemology')
-  end
-
   def create(event)
     info "#{color("Docker Create (#{event.duration.round(1)}ms)", MAGENTA)} "\
       "#{event.payload[:image]} => #{event.payload[:container].id}"
@@ -13,3 +9,5 @@ class Coursemology::Evaluator::Logging::DockerLogSubscriber < ActiveSupport::Log
       "#{event.payload[:container]}"
   end
 end
+
+Coursemology::Evaluator::Logging::DockerLogSubscriber.attach_to(:'docker.evaluator.coursemology')
