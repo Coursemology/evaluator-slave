@@ -14,6 +14,14 @@ module Coursemology::Evaluator
 
   autoload :Client
   autoload :CLI
+  autoload :Logging
   autoload :Models
   autoload :Services
+
+  # The logger to use for the client.
+  mattr_reader(:logger) { ActiveSupport::Logger.new(STDOUT) }
+  Logging.start
+
+  # Application cache, like Rails. Currently nil.
+  mattr_reader(:cache)
 end

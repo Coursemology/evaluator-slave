@@ -27,8 +27,14 @@ class Coursemology::Evaluator::Client
 
   # Requests evaluations from the server.
   def allocate_evaluations
-    evaluations = Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate
+    evaluations =
+      ActiveSupport::Notifications.instrument('allocate.client.evaluator.coursemology') do
+        Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate
+      end
+
     on_allocate(evaluations)
+  rescue ActiveRestClient::HTTPUnauthorisedClientException => e
+    ActiveSupport::Notifications.publish('allocate_fail.client.evaluator.coursemology', e: e)
   end
 
   # The callback for handling an array of allocated evaluations.
@@ -46,8 +52,14 @@ class Coursemology::Evaluator::Client
   # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation] evaluation The evaluation
   #   retrieved from the server.
   def on_evaluation(evaluation)
-    evaluation.evaluate
-    evaluation.save
+    ActiveSupport::Notifications.instrument('evaluate.client.evaluator.coursemology',
+                                            evaluation: evaluation) do
+      evaluation.evaluate
+    end
+
+    ActiveSupport::Notifications.instrument('save.client.evaluator.coursemology') do
+      evaluation.save
+    end
   end
 
   # The callback for handling SIGTERM sent to the process.
