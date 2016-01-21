@@ -1,0 +1,165 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/allocate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-type:
+      - application/json; charset=utf-8
+      etag:
+      - W/"ebabb61a52d69a09e40e6cc6b70a3506"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 09c81730-af3d-4626-9c90-a86569eec7f0
+      x-runtime:
+      - '1.151567'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
+      date:
+      - Wed, 20 Jan 2016 14:15:30 GMT
+      content-length:
+      - '113'
+      connection:
+      - Keep-Alive
+    body:
+      encoding: UTF-8
+      string: '[{"id":1,"language":"Coursemology::Polyglot::Language::Python::Python2Point7","memory_limit":32,"time_limit":10}]'
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 14:15:31 GMT
+- request:
+    method: get
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/1/package
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 302
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      location:
+      - http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg
+      content-type:
+      - text/html; charset=utf-8
+      cache-control:
+      - no-cache
+      x-request-id:
+      - b3094756-62c4-4ef2-950f-dd36c84a5286
+      x-runtime:
+      - '0.395076'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
+      date:
+      - Wed, 20 Jan 2016 14:15:32 GMT
+      content-length:
+      - '161'
+      connection:
+      - Keep-Alive
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg">redirected</a>.</body></html>
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 14:15:32 GMT
+- request:
+    method: get
+    uri: http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      last-modified:
+      - Wed, 20 Jan 2016 09:06:59 GMT
+      content-type:
+      - text/plain
+      content-length:
+      - '669'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
+      date:
+      - Wed, 20 Jan 2016 14:15:33 GMT
+      connection:
+      - Keep-Alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        UEsDBBQAAAAIAOKQMkhX5T3waQAAAIIAAAAIAAAATWFrZWZpbGVVjDsKgDAQ
+        BWsF77CksfLXifjpPIEeQOKiAZMNSRSPb4KFWL0p5o02qBeDTRInMSepxfGy
+        Q+s8RMh3grQdbnnAhcYKUh2r8pIBKk6rUFvH5mnMajb0KfTgc2Rc7vXvHFr2
+        FH6gCNLfegBQSwMEFAAAAAAAs3uIRwAAAAAAAAAAAAAAAAsAAABzdWJtaXNz
+        aW9uL1BLAwQKAAAAAAC1e4hHAAAAAAAAAAAAAAAAFgAAAHN1Ym1pc3Npb24v
+        X19pbml0X18ucHlQSwMEFAAAAAAAsHuIRwAAAAAAAAAAAAAAAAYAAAB0ZXN0
+        cy9QSwECPwAUAAAACADikDJIV+U98GkAAACCAAAACAAkAAAAAAAAACAAAAAA
+        AAAATWFrZWZpbGUKACAAAAAAAAEAGAALns/611HRAUNtut/XUdEBQ22639dR
+        0QFQSwECPwAUAAAAAACze4hHAAAAAAAAAAAAAAAACwAkAAAAAAAAABAAAACP
+        AAAAc3VibWlzc2lvbi8KACAAAAAAAAEAGAAg0+MwijHRASDT4zCKMdEBINPj
+        MIox0QFQSwECPwAKAAAAAAC1e4hHAAAAAAAAAAAAAAAAFgAkAAAAAAAAACAA
+        AAC4AAAAc3VibWlzc2lvbi9fX2luaXRfXy5weQoAIAAAAAAAAQAYANf2ATSK
+        MdEB1/YBNIox0QHX9gE0ijHRAVBLAQI/ABQAAAAAALB7iEcAAAAAAAAAAAAA
+        AAAGACQAAAAAAAAAEAAAAOwAAAB0ZXN0cy8KACAAAAAAAAEAGADwz2UtijHR
+        AfDPZS2KMdEB8M9lLYox0QFQSwUGAAAAAAQABAB3AQAAEAEAAAAA
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 14:15:33 GMT
+recorded_with: VCR 3.0.0

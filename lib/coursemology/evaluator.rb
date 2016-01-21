@@ -16,6 +16,7 @@ module Coursemology::Evaluator
   autoload :CLI
   autoload :Models
   autoload :Services
+  autoload :StringIO
 
   eager_autoload do
     autoload :Logging
