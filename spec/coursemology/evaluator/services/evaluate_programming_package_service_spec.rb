@@ -26,9 +26,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     end
 
     it 'instruments the creation' do
-      expect(Docker::Image).to receive(:create)
-      expect(Docker::Container).to receive(:create)
-
       expect { subject.send(:create_container, image) }.to \
         instrument_notification('create.docker.evaluator.coursemology')
     end
@@ -110,11 +107,10 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   end
 
   describe '#destroy_container' do
-    it 'instruments the destruction' do
-      container = double
-      allow(container).to receive(:delete)
-      allow(container).to receive(:id).and_return('')
+    let(:image) { 'python:2.7' }
+    let(:container) { subject.send(:create_container, image) }
 
+    it 'instruments the destruction' do
       expect { subject.send(:destroy_container, container) }.to \
         instrument_notification('destroy.docker.evaluator.coursemology')
     end

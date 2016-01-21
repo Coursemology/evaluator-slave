@@ -61,10 +61,13 @@ RSpec.describe Coursemology::Evaluator::Client do
   end
 
   describe '#on_evaluation' do
-    let(:dummy_evaluation) { build(:programming_evaluation) }
+    let(:dummy_evaluation) do
+      build(:programming_evaluation).tap do |dummy_evaluation|
+        expect(dummy_evaluation).to receive(:evaluate)
+      end
+    end
 
     it 'evaluates the evaluation' do
-      expect(dummy_evaluation).to receive(:evaluate)
       subject.send(:on_evaluation, dummy_evaluation)
     end
 
