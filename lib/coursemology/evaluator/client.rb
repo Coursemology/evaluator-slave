@@ -19,7 +19,11 @@ class Coursemology::Evaluator::Client
       allocate_evaluations
       break if @terminate
 
+      # :nocov:
+      # This sleep might not be triggered in the specs, because interruptions to the thread is
+      # nondeterministically run by the OS scheduler.
       sleep(1.minute)
+      # :nocov:
     end
   end
 
