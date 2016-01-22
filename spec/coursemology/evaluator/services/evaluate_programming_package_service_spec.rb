@@ -82,6 +82,22 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     end
   end
 
+  describe '#extract_result' do
+    let(:image) { 'python:2.7' }
+    let(:container) do
+      subject.send(:create_container, image).tap do |container|
+        subject.send(:execute_package, container)
+      end
+    end
+    after { subject.send(:destroy_container, container) }
+
+    it 'does not expose raw Docker Attach Protocol in the output' do
+      result = subject.send(:extract_result, container)
+      expect(result.stdout).not_to include("\u0000")
+      expect(result.stderr).not_to include("\u0000")
+    end
+  end
+
   describe '#extract_test_report' do
     let(:image) { 'python:2.7' }
     let(:report_path) { File.join(__dir__, '../../../fixtures/sample_report.xml') }

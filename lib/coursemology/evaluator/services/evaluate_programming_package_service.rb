@@ -36,8 +36,7 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
     copy_package(container)
     execute_package(container)
 
-    Result.new(container.logs(stdout: true), container.logs(stderr: true),
-               extract_test_report(container))
+    extract_result(container)
   ensure
     destroy_container(container) if container
   end
@@ -113,6 +112,13 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
       container.refresh!
       container_state = container.info
     end
+  end
+
+  def extract_result(container)
+    logs = container.logs(stdout: true, stderr: true)
+
+    _, stdout, stderr = Coursemology::Evaluator::Utils.parse_docker_stream(logs)
+    Result.new(stdout, stderr, extract_test_report(container))
   end
 
   def extract_test_report(container)
