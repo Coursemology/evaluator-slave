@@ -11,6 +11,47 @@ RSpec.describe Coursemology::Evaluator::Models::Base do
     end
   end
 
+  describe '.model_key' do
+    class self::DummyModel < Coursemology::Evaluator::Models::Base
+      model_key :dummy_model
+
+      put :save, '/'
+    end
+    subject { self.class::DummyModel.new }
+
+    let(:dummy_response) do
+      double.tap do |dummy_response|
+        allow(dummy_response).to receive(:on_complete)
+        allow(dummy_response).to receive(:finished?).and_return(true)
+      end
+    end
+
+    before do
+      expect(self.class::DummyModel).to receive(:fix_put_parameters).
+        and_wrap_original do |m, *args|
+        @request = args.last
+        expect(@request).to receive(:do_request).and_return(dummy_response)
+
+        m.call(*args)
+      end
+    end
+
+    it 'prepends all request data with the key' do
+      subject.lol = true
+      subject.save
+
+      expect(@request.post_params).to have_key(:dummy_model)
+    end
+
+    context 'when the data is empty' do
+      it 'does not prepend the key' do
+        subject.save
+
+        expect(@request.post_params).not_to have_key(:dummy_model)
+      end
+    end
+  end
+
   describe '#adds_authentication' do
     with_mock_client(api_user_email: 'email', api_token: 'token') do
       let(:request) do

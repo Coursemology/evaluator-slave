@@ -2,8 +2,12 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
   extend ActiveSupport::Autoload
   autoload :Package
 
-  get :find, 'courses/assessment/programming_evaluations/:id'
-  post :allocate, 'courses/assessment/programming_evaluations/allocate'
+  request_body_type :json
+  model_key :programming_evaluation
+
+  get :find, 'courses/assessment/programming_evaluations/:id'.freeze
+  post :allocate, 'courses/assessment/programming_evaluations/allocate'.freeze
+  put :save, 'courses/assessment/programming_evaluations/:id/result'.freeze
 
   # Gets the language for the programming evaluation.
   #
