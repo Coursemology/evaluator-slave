@@ -1,3 +1,11 @@
+module ProgrammingEvaluationFactory
+  def self.define_package(evaluation)
+    file = File.new(File.join(__dir__, '../fixtures/programming_question_template.zip'), 'rb')
+    package = Coursemology::Evaluator::Models::ProgrammingEvaluation::Package.new(file)
+    evaluation.instance_variable_set(:@package, package)
+  end
+end
+
 FactoryGirl.define do
   factory :programming_evaluation, class: Coursemology::Evaluator::Models::ProgrammingEvaluation do
     id 1
@@ -5,10 +13,13 @@ FactoryGirl.define do
     memory_limit 32
     time_limit 5
 
+    after(:stub) do |evaluation|
+      evaluation.define_singleton_method(:save) {}
+      ProgrammingEvaluationFactory.define_package(evaluation)
+    end
+
     after(:build) do |evaluation|
-      file = File.new(File.join(__dir__, '../fixtures/programming_question_template.zip'), 'rb')
-      package = Coursemology::Evaluator::Models::ProgrammingEvaluation::Package.new(file)
-      evaluation.instance_variable_set(:@package, package)
+      ProgrammingEvaluationFactory.define_package(evaluation)
     end
   end
 end
