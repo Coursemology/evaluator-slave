@@ -33,7 +33,8 @@ class Coursemology::Evaluator::Client
   def allocate_evaluations
     evaluations =
       ActiveSupport::Notifications.instrument('allocate.client.evaluator.coursemology') do
-        Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate
+        languages = Coursemology::Polyglot::Language.concrete_languages.map(&:display_name)
+        Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate(language: languages)
       end
 
     on_allocate(evaluations)
