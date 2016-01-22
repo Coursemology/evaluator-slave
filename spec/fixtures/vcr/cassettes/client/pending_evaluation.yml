@@ -5,10 +5,10 @@ http_interactions:
     uri: http://localhost:3000/courses/assessment/programming_evaluations/allocate
     body:
       encoding: UTF-8
-      string: "{}"
+      string: '{"programming_evaluation":{"language":["Python 3.4","Python 2.7"]}}'
     headers:
       User-Agent:
-      - ActiveRestClient/1.2.0
+      - Flexirest/1.2.14
       Connection:
       - Keep-Alive
       Accept:
@@ -37,13 +37,13 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - bc6774ab-b514-4aee-899b-2809cd81cbb6
+      - 1503895e-18ca-4c47-a56b-241e22d44d30
       x-runtime:
-      - '1.245297'
+      - '1.147844'
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Fri, 22 Jan 2016 05:10:09 GMT
+      - Fri, 22 Jan 2016 10:53:28 GMT
       content-length:
       - '113'
       connection:
@@ -52,7 +52,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"id":1,"language":"Coursemology::Polyglot::Language::Python::Python2Point7","memory_limit":32,"time_limit":10}]'
     http_version: 
-  recorded_at: Fri, 22 Jan 2016 05:10:09 GMT
+  recorded_at: Fri, 22 Jan 2016 10:53:28 GMT
 - request:
     method: get
     uri: http://localhost:3000/courses/assessment/programming_evaluations/1/package
@@ -61,7 +61,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - ActiveRestClient/1.2.0
+      - Flexirest/1.2.14
       Connection:
       - Keep-Alive
       Accept:
@@ -90,13 +90,13 @@ http_interactions:
       cache-control:
       - no-cache
       x-request-id:
-      - f110098f-cd14-450d-98f1-786de6cf8248
+      - da51f9e1-637d-4eef-bd3b-6ccbed4e10cb
       x-runtime:
-      - '0.904040'
+      - '0.465211'
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Fri, 22 Jan 2016 05:10:11 GMT
+      - Fri, 22 Jan 2016 10:53:29 GMT
       content-length:
       - '161'
       connection:
@@ -105,7 +105,7 @@ http_interactions:
       encoding: UTF-8
       string: <html><body>You are being <a href="http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg">redirected</a>.</body></html>
     http_version: 
-  recorded_at: Fri, 22 Jan 2016 05:10:11 GMT
+  recorded_at: Fri, 22 Jan 2016 10:53:29 GMT
 - request:
     method: get
     uri: http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg
@@ -114,7 +114,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - ActiveRestClient/1.2.0
+      - Flexirest/1.2.14
       Connection:
       - Keep-Alive
       Accept:
@@ -139,7 +139,7 @@ http_interactions:
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Fri, 22 Jan 2016 05:10:12 GMT
+      - Fri, 22 Jan 2016 10:53:30 GMT
       connection:
       - Keep-Alive
     body:
@@ -161,7 +161,7 @@ http_interactions:
         AAAGACQAAAAAAAAAEAAAAOwAAAB0ZXN0cy8KACAAAAAAAAEAGADwz2UtijHR
         AfDPZS2KMdEB8M9lLYox0QFQSwUGAAAAAAQABAB3AQAAEAEAAAAA
     http_version: 
-  recorded_at: Fri, 22 Jan 2016 05:10:12 GMT
+  recorded_at: Fri, 22 Jan 2016 10:53:30 GMT
 - request:
     method: put
     uri: http://localhost:3000/courses/assessment/programming_evaluations/1/result
@@ -175,7 +175,7 @@ http_interactions:
         version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003ctestsuites /\u003e\n"}}'
     headers:
       User-Agent:
-      - ActiveRestClient/1.2.0
+      - Flexirest/1.2.14
       Connection:
       - Keep-Alive
       Accept:
@@ -204,13 +204,13 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - 4d0a0507-bb1c-4335-ab6f-68e2dd717e15
+      - df28d165-7c12-460d-9ff9-856bbac87cda
       x-runtime:
-      - '0.539025'
+      - '0.642362'
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Fri, 22 Jan 2016 05:10:20 GMT
+      - Fri, 22 Jan 2016 10:53:33 GMT
       content-length:
       - '2'
       connection:
@@ -219,5 +219,5 @@ http_interactions:
       encoding: UTF-8
       string: "{}"
     http_version: 
-  recorded_at: Fri, 22 Jan 2016 05:10:21 GMT
+  recorded_at: Fri, 22 Jan 2016 10:53:34 GMT
 recorded_with: VCR 3.0.0
