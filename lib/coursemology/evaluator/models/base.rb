@@ -19,6 +19,26 @@ class Coursemology::Evaluator::Models::Base < Flexirest::Base
   verbose!
   before_request :add_authentication
 
+  # Sets the key of the model. This is the key that all attributes are nested under, the same as
+  # the +require+ directive in the controller of the web application.
+  #
+  # @param [String] key The key to prefix all attributes with.
+  def self.model_key(key)
+    before_request do |name, param|
+      fix_put_parameters(key, name, param) if [:post, :patch, :put].include?(param.method[:method])
+    end
+  end
+  private_class_method :model_key
+
+  # Fixes the request parameters when executing a POST, PATCH or PUT.
+  #
+  # @param [String] key The key to prefix all attributes with.
+  # @param [Request] param The request parameter to prepend the key with.
+  def self.fix_put_parameters(key, _, param)
+    param.post_params = { key => param.post_params } unless param.post_params.empty?
+  end
+  private_class_method :fix_put_parameters
+
   private
 
   # Adds the authentication email and token to the request.
