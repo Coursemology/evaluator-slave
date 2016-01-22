@@ -25,6 +25,11 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
       container
     end
 
+    it 'instruments the pull' do
+      expect { subject.send(:create_container, image) }.to \
+        instrument_notification('pull.docker.evaluator.coursemology')
+    end
+
     it 'instruments the creation' do
       expect { subject.send(:create_container, image) }.to \
         instrument_notification('create.docker.evaluator.coursemology')
