@@ -1,5 +1,5 @@
 require 'active_support/all'
-require 'active_rest_client'
+require 'flexirest'
 require 'faraday_middleware'
 require 'docker'
 require 'zip'
@@ -24,9 +24,6 @@ module Coursemology::Evaluator
 
   # The logger to use for the client.
   mattr_reader(:logger) { ActiveSupport::Logger.new(STDOUT) }
-
-  # Application cache, like Rails. Currently nil.
-  mattr_reader(:cache)
 
   def self.eager_load!
     super
