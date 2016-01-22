@@ -54,8 +54,8 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
   # @param [Hash] params The parameter to be part of the request.
   # @return [String] The response body.
   def plain_request(url, params = {})
-    request = ActiveRestClient::Request.new({ url: url, method: :get, options: { plain: true } },
-                                            self.class)
+    request = Flexirest::Request.new({ url: url, method: :get, options: { plain: true } },
+                                     self.class)
     request.call(params)
   end
 end

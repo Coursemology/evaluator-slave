@@ -37,7 +37,7 @@ class Coursemology::Evaluator::Client
       end
 
     on_allocate(evaluations)
-  rescue ActiveRestClient::HTTPUnauthorisedClientException => e
+  rescue Flexirest::HTTPUnauthorisedClientException => e
     ActiveSupport::Notifications.publish('allocate_fail.client.evaluator.coursemology', e: e)
   end
 
