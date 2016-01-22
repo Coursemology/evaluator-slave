@@ -4,8 +4,8 @@ http_interactions:
     method: post
     uri: http://localhost:3000/courses/assessment/programming_evaluations/allocate
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: "{}"
     headers:
       User-Agent:
       - ActiveRestClient/1.2.0
@@ -18,7 +18,7 @@ http_interactions:
       X-User-Token:
       - YOUR_TOKEN_HERE
       Content-Type:
-      - application/x-www-form-urlencoded
+      - application/json; charset=utf-8
   response:
     status:
       code: 200
@@ -37,13 +37,13 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - 09c81730-af3d-4626-9c90-a86569eec7f0
+      - bc6774ab-b514-4aee-899b-2809cd81cbb6
       x-runtime:
-      - '1.151567'
+      - '1.245297'
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Wed, 20 Jan 2016 14:15:30 GMT
+      - Fri, 22 Jan 2016 05:10:09 GMT
       content-length:
       - '113'
       connection:
@@ -52,7 +52,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"id":1,"language":"Coursemology::Polyglot::Language::Python::Python2Point7","memory_limit":32,"time_limit":10}]'
     http_version: 
-  recorded_at: Wed, 20 Jan 2016 14:15:31 GMT
+  recorded_at: Fri, 22 Jan 2016 05:10:09 GMT
 - request:
     method: get
     uri: http://localhost:3000/courses/assessment/programming_evaluations/1/package
@@ -71,7 +71,7 @@ http_interactions:
       X-User-Token:
       - YOUR_TOKEN_HERE
       Content-Type:
-      - application/x-www-form-urlencoded
+      - application/json; charset=utf-8
   response:
     status:
       code: 302
@@ -90,13 +90,13 @@ http_interactions:
       cache-control:
       - no-cache
       x-request-id:
-      - b3094756-62c4-4ef2-950f-dd36c84a5286
+      - f110098f-cd14-450d-98f1-786de6cf8248
       x-runtime:
-      - '0.395076'
+      - '0.904040'
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Wed, 20 Jan 2016 14:15:32 GMT
+      - Fri, 22 Jan 2016 05:10:11 GMT
       content-length:
       - '161'
       connection:
@@ -105,7 +105,7 @@ http_interactions:
       encoding: UTF-8
       string: <html><body>You are being <a href="http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg">redirected</a>.</body></html>
     http_version: 
-  recorded_at: Wed, 20 Jan 2016 14:15:32 GMT
+  recorded_at: Fri, 22 Jan 2016 05:10:11 GMT
 - request:
     method: get
     uri: http://localhost:3000/downloads/d20151214-14316-19zacic/programming-import20151214-14316-l6y6yg
@@ -124,7 +124,7 @@ http_interactions:
       X-User-Token:
       - YOUR_TOKEN_HERE
       Content-Type:
-      - application/x-www-form-urlencoded
+      - application/json; charset=utf-8
   response:
     status:
       code: 200
@@ -139,7 +139,7 @@ http_interactions:
       server:
       - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
       date:
-      - Wed, 20 Jan 2016 14:15:33 GMT
+      - Fri, 22 Jan 2016 05:10:12 GMT
       connection:
       - Keep-Alive
     body:
@@ -161,5 +161,63 @@ http_interactions:
         AAAGACQAAAAAAAAAEAAAAOwAAAB0ZXN0cy8KACAAAAAAAAEAGADwz2UtijHR
         AfDPZS2KMdEB8M9lLYox0QFQSwUGAAAAAAQABAB3AQAAEAEAAAAA
     http_version: 
-  recorded_at: Wed, 20 Jan 2016 14:15:33 GMT
+  recorded_at: Fri, 22 Jan 2016 05:10:12 GMT
+- request:
+    method: put
+    uri: http://localhost:3000/courses/assessment/programming_evaluations/1/result
+    body:
+      encoding: UTF-8
+      string: '{"programming_evaluation":{"language":"Coursemology::Polyglot::Language::Python::Python2Point7","memory_limit":32,"time_limit":10,"stdout":"make:
+        Nothing to be done for ''prepare''.\nmake: Nothing to be done for ''compile''.\necho
+        ''\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e'' \u003e report.xml\necho
+        ''\u003ctestsuites /\u003e'' \u003e\u003e report.xml\n","stderr":"mkdir: cannot
+        create directory ''/home/coursemology/package'': File exists\n","test_report":"\u003c?xml
+        version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003ctestsuites /\u003e\n"}}'
+    headers:
+      User-Agent:
+      - ActiveRestClient/1.2.0
+      Connection:
+      - Keep-Alive
+      Accept:
+      - application/hal+json, application/json;q=0.5
+      X-User-Email:
+      - test@example.org
+      X-User-Token:
+      - YOUR_TOKEN_HERE
+      Content-Type:
+      - application/json; charset=utf-8
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-type:
+      - application/json; charset=utf-8
+      etag:
+      - W/"99914b932bd37a50b983c5e7c90ae93b"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 4d0a0507-bb1c-4335-ab6f-68e2dd717e15
+      x-runtime:
+      - '0.539025'
+      server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-10-28)
+      date:
+      - Fri, 22 Jan 2016 05:10:20 GMT
+      content-length:
+      - '2'
+      connection:
+      - Keep-Alive
+    body:
+      encoding: UTF-8
+      string: "{}"
+    http_version: 
+  recorded_at: Fri, 22 Jan 2016 05:10:21 GMT
 recorded_with: VCR 3.0.0

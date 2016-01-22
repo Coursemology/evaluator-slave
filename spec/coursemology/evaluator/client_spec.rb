@@ -28,7 +28,7 @@ RSpec.describe Coursemology::Evaluator::Client do
 
   describe '#allocate_evaluations' do
     context 'when an evaluation is provided' do
-      let(:dummy_evaluation) { build(:programming_evaluation) }
+      let(:dummy_evaluation) { build_stubbed(:programming_evaluation) }
       before do
         expect(Coursemology::Evaluator::Models::ProgrammingEvaluation).to \
           receive(:allocate).and_return([dummy_evaluation])
@@ -62,7 +62,7 @@ RSpec.describe Coursemology::Evaluator::Client do
 
   describe '#on_evaluation' do
     let(:dummy_evaluation) do
-      build(:programming_evaluation).tap do |dummy_evaluation|
+      build_stubbed(:programming_evaluation).tap do |dummy_evaluation|
         expect(dummy_evaluation).to receive(:evaluate)
       end
     end
