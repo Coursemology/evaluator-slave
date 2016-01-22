@@ -44,9 +44,13 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
   def create_container(image)
     image_identifier = "coursemology/evaluator-image-#{image}"
+    ActiveSupport::Notifications.instrument('pull.docker.evaluator.coursemology',
+                                            image: image_identifier) do
+      Docker::Image.create('fromImage' => image_identifier)
+    end
+
     ActiveSupport::Notifications.instrument('create.docker.evaluator.coursemology',
                                             image: image_identifier) do |payload|
-      Docker::Image.create('fromImage' => image_identifier)
       payload[:container] = Docker::Container.create('Image' => image_identifier)
     end
   end
