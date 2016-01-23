@@ -22,5 +22,8 @@ This is the evaluator program which will query Coursemology for pending evaluati
 2. Modify `.env` to suit your environment. Point to the host to your Coursemology instance, and 
    specify the API email and API key.
 
+   1. You might need to configure a new user on your Coursemology instance, enable token 
+      authentication, and grant the `auto_grader` system/instance permission.
+
 3. Start the evaluator using the Procfile. You can use [foreman](https://github.com/ddollar/foreman)
    or any similar tool to generate system scripts for boot.
