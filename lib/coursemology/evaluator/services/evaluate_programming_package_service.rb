@@ -46,26 +46,14 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
   def create_container(image)
     image_identifier = "coursemology/evaluator-image-#{image}"
-    ActiveSupport::Notifications.instrument('pull.docker.evaluator.coursemology',
-                                            image: image_identifier) do
-      Docker::Image.create('fromImage' => image_identifier)
-    end
-
-    ActiveSupport::Notifications.instrument('create.docker.evaluator.coursemology',
-                                            image: image_identifier) do |payload|
-      options = container_options.merge('Image' => image_identifier)
-      payload[:container] = Docker::Container.create(options)
-    end
+    Coursemology::Evaluator::DockerContainer.create(image_identifier, argv: container_arguments)
   end
 
-  def container_options
-    result = {}
-    command_options = []
-    command_options.push("-c#{@evaluation.time_limit}") if @evaluation.time_limit
-    command_options.push("-m#{@evaluation.memory_limit * MEMORY_LIMIT_RATIO}") \
-      if @evaluation.memory_limit
+  def container_arguments
+    result = []
+    result.push("-c#{@evaluation.time_limit}") if @evaluation.time_limit
+    result.push("-m#{@evaluation.memory_limit * MEMORY_LIMIT_RATIO}") if @evaluation.memory_limit
 
-    result['Cmd'] = command_options unless command_options.empty?
     result
   end
 
@@ -171,9 +159,6 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   end
 
   def destroy_container(container)
-    ActiveSupport::Notifications.instrument('destroy.docker.evaluator.coursemology',
-                                            container: container.id) do
-      container.delete
-    end
+    container.delete
   end
 end
