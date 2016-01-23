@@ -106,12 +106,21 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
   def execute_package(container)
     container.start!
+    execute_package_wait(container)
+  end
+
+  # Waits for the container to exit the Running state.
+  #
+  # This will time out for long running operations, so keep retrying until we return.
+  def execute_package_wait(container)
     container_state = container.info
     while container_state.fetch('State', {}).fetch('Running', true)
       container.wait
       container.refresh!
       container_state = container.info
     end
+  rescue Docker::Error::TimeoutError
+    retry
   end
 
   def extract_result(container)

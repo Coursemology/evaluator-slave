@@ -82,6 +82,24 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     end
   end
 
+  describe '#execute_package_wait' do
+    let(:image) { 'python:2.7' }
+    let(:container) { subject.send(:create_container, image) }
+    after { subject.send(:destroy_container, container) }
+
+    it 'retries until the container finishes' do
+      called = 0
+      expect(container).to receive(:wait).and_wrap_original do |block, *args|
+        args.push(0.second) if called == 0
+        called += 1
+
+        block.call(*args)
+      end.at_least(:twice)
+
+      subject.send(:execute_package_wait, container)
+    end
+  end
+
   describe '#extract_result' do
     let(:image) { 'python:2.7' }
     let(:container) do
