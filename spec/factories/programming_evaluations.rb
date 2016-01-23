@@ -10,8 +10,8 @@ FactoryGirl.define do
   factory :programming_evaluation, class: Coursemology::Evaluator::Models::ProgrammingEvaluation do
     id 1
     language Coursemology::Polyglot::Language::Python::Python2Point7.name
-    memory_limit 32
-    time_limit 5
+    memory_limit nil
+    time_limit nil
 
     after(:stub) do |evaluation|
       evaluation.define_singleton_method(:save) {}

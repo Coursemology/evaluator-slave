@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageService do
-  let(:package) { build(:programming_evaluation) }
+  let(:package) { build(:programming_evaluation, *package_params) }
+  let(:package_params) { nil }
   subject { Coursemology::Evaluator::Services::EvaluateProgrammingPackageService.new(package) }
 
   describe '.execute' do
@@ -33,6 +34,18 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     it 'instruments the creation' do
       expect { subject.send(:create_container, image) }.to \
         instrument_notification('create.docker.evaluator.coursemology')
+    end
+
+    context 'when the evaluation has resource limits' do
+      let(:package_params) { [time_limit: 5, memory_limit: 16]  }
+
+      it 'specifies them to the container' do
+        expect(Docker::Container).to \
+          receive(:create).with('Image' => "coursemology/evaluator-image-#{image}",
+                                'Cmd' => ['-c5', '-m16384'])
+
+        subject.send(:create_container, image)
+      end
     end
   end
 

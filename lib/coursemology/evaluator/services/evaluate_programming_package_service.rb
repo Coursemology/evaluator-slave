@@ -10,6 +10,9 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   # The path to where the test report will be at.
   REPORT_PATH = File.join(PACKAGE_PATH, 'report.xml')
 
+  # The ratio to multiply the memory limits from our evaluation to the container by.
+  MEMORY_LIMIT_RATIO = 1.megabyte / 1.kilobyte
+
   # Executes the given package in a container.
   #
   # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation] evaluation The evaluation
@@ -50,8 +53,20 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
     ActiveSupport::Notifications.instrument('create.docker.evaluator.coursemology',
                                             image: image_identifier) do |payload|
-      payload[:container] = Docker::Container.create('Image' => image_identifier)
+      options = container_options.merge('Image' => image_identifier)
+      payload[:container] = Docker::Container.create(options)
     end
+  end
+
+  def container_options
+    result = {}
+    command_options = []
+    command_options.push("-c#{@evaluation.time_limit}") if @evaluation.time_limit
+    command_options.push("-m#{@evaluation.memory_limit * MEMORY_LIMIT_RATIO}") \
+      if @evaluation.memory_limit
+
+    result['Cmd'] = command_options unless command_options.empty?
+    result
   end
 
   # Copies the contents of the package to the container.
