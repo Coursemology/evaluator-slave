@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageService do
-  let(:package) { build(:programming_evaluation) }
+  let(:package) { build(:programming_evaluation, *package_params) }
+  let(:package_params) { nil }
+  let(:image) { 'python:2.7' }
   subject { Coursemology::Evaluator::Services::EvaluateProgrammingPackageService.new(package) }
 
   describe '.execute' do
@@ -12,27 +14,26 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   end
 
   describe '#create_container' do
-    let(:image) { 'python:2.7' }
     let(:container) { subject.send(:create_container, image) }
 
     it 'prefixes the image with coursemology/evaluator-image' do
-      expect(Docker::Image).to \
-        receive(:create).with('fromImage' => "coursemology/evaluator-image-#{image}").
-        and_call_original
-      expect(Docker::Container).to \
-        receive(:create).with('Image' => "coursemology/evaluator-image-#{image}")
+      expect(Coursemology::Evaluator::DockerContainer).to \
+        receive(:create).with("coursemology/evaluator-image-#{image}",
+                              hash_including(argv: []))
 
       container
     end
 
-    it 'instruments the pull' do
-      expect { subject.send(:create_container, image) }.to \
-        instrument_notification('pull.docker.evaluator.coursemology')
-    end
+    context 'when the evaluation has resource limits' do
+      let(:package_params) { [time_limit: 5, memory_limit: 16]  }
 
-    it 'instruments the creation' do
-      expect { subject.send(:create_container, image) }.to \
-        instrument_notification('create.docker.evaluator.coursemology')
+      it 'specifies them to the container' do
+        expect(Coursemology::Evaluator::DockerContainer).to \
+          receive(:create).with("coursemology/evaluator-image-#{image}",
+                                hash_including(argv: ['-c5', '-m16384']))
+
+        subject.send(:create_container, image)
+      end
     end
   end
 
@@ -62,7 +63,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   end
 
   describe '#execute_package' do
-    let(:image) { 'python:2.7' }
     let(:container) { subject.send(:create_container, image) }
     after { subject.send(:destroy_container, container) }
 
@@ -83,7 +83,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   end
 
   describe '#execute_package_wait' do
-    let(:image) { 'python:2.7' }
     let(:container) { subject.send(:create_container, image) }
     after { subject.send(:destroy_container, container) }
 
@@ -101,7 +100,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   end
 
   describe '#extract_result' do
-    let(:image) { 'python:2.7' }
     let(:container) do
       subject.send(:create_container, image).tap do |container|
         subject.send(:execute_package, container)
@@ -117,7 +115,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
   end
 
   describe '#extract_test_report' do
-    let(:image) { 'python:2.7' }
     let(:report_path) { File.join(__dir__, '../../../fixtures/sample_report.xml') }
     let(:report_contents) { File.read(report_path) }
     let(:container) { subject.send(:create_container, image) }
@@ -142,16 +139,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
       it 'returns nil' do
         expect(subject.send(:extract_test_report, container)).to be_nil
       end
-    end
-  end
-
-  describe '#destroy_container' do
-    let(:image) { 'python:2.7' }
-    let(:container) { subject.send(:create_container, image) }
-
-    it 'instruments the destruction' do
-      expect { subject.send(:destroy_container, container) }.to \
-        instrument_notification('destroy.docker.evaluator.coursemology')
     end
   end
 end

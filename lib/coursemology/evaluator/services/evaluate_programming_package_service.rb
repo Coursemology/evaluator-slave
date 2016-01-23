@@ -10,6 +10,9 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   # The path to where the test report will be at.
   REPORT_PATH = File.join(PACKAGE_PATH, 'report.xml')
 
+  # The ratio to multiply the memory limits from our evaluation to the container by.
+  MEMORY_LIMIT_RATIO = 1.megabyte / 1.kilobyte
+
   # Executes the given package in a container.
   #
   # @param [Coursemology::Evaluator::Models::ProgrammingEvaluation] evaluation The evaluation
@@ -43,15 +46,15 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
   def create_container(image)
     image_identifier = "coursemology/evaluator-image-#{image}"
-    ActiveSupport::Notifications.instrument('pull.docker.evaluator.coursemology',
-                                            image: image_identifier) do
-      Docker::Image.create('fromImage' => image_identifier)
-    end
+    Coursemology::Evaluator::DockerContainer.create(image_identifier, argv: container_arguments)
+  end
 
-    ActiveSupport::Notifications.instrument('create.docker.evaluator.coursemology',
-                                            image: image_identifier) do |payload|
-      payload[:container] = Docker::Container.create('Image' => image_identifier)
-    end
+  def container_arguments
+    result = []
+    result.push("-c#{@evaluation.time_limit}") if @evaluation.time_limit
+    result.push("-m#{@evaluation.memory_limit * MEMORY_LIMIT_RATIO}") if @evaluation.memory_limit
+
+    result
   end
 
   # Copies the contents of the package to the container.
@@ -156,9 +159,6 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   end
 
   def destroy_container(container)
-    ActiveSupport::Notifications.instrument('destroy.docker.evaluator.coursemology',
-                                            container: container.id) do
-      container.delete
-    end
+    container.delete
   end
 end

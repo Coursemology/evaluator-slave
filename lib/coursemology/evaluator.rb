@@ -13,6 +13,7 @@ module Coursemology::Evaluator
   extend ActiveSupport::Autoload
 
   autoload :Client
+  autoload :DockerContainer
   autoload :CLI
   autoload :Models
   autoload :Services
