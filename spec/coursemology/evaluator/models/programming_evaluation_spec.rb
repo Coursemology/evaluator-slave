@@ -83,5 +83,9 @@ RSpec.describe Coursemology::Evaluator::Models::ProgrammingEvaluation do
     it 'sets the test_report attribute' do
       expect { subject.evaluate }.to change { subject.test_report }
     end
+
+    it 'sets the exit_code attribute' do
+      expect { subject.evaluate }.to change { subject.exit_code }
+    end
   end
 end

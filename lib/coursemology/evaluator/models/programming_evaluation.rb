@@ -48,6 +48,7 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
     self.stdout = result.stdout
     self.stderr = result.stderr
     self.test_report = result.test_report
+    self.exit_code = result.exit_code
   end
 
   private
