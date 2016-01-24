@@ -82,23 +82,6 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     end
   end
 
-  describe '#execute_package_wait' do
-    let(:container) { subject.send(:create_container, image) }
-    after { subject.send(:destroy_container, container) }
-
-    it 'retries until the container finishes' do
-      called = 0
-      expect(container).to receive(:wait).and_wrap_original do |block, *args|
-        args.push(0.second) if called == 0
-        called += 1
-
-        block.call(*args)
-      end.at_least(:twice)
-
-      subject.send(:execute_package_wait, container)
-    end
-  end
-
   describe '#extract_result' do
     let(:container) do
       subject.send(:create_container, image).tap do |container|
@@ -111,6 +94,10 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
       result = subject.send(:extract_result, container)
       expect(result.stdout).not_to include("\u0000")
       expect(result.stderr).not_to include("\u0000")
+    end
+
+    it 'sets the return code of the container' do
+      expect(subject.send(:extract_result, container).exit_code).to eq(2)
     end
   end
 
