@@ -8,19 +8,16 @@ module CoverageHelper
     # gem.
     #
     # @param [String] name The name of the module to require.
-    # @param [Proc] initializer The block to execute when the module is required successfully.
-    def load(name, &initializer)
+    # @yield The block to execute when the module is required successfully.
+    def load(name)
       old_formatter = SimpleCov.formatter
       require name
-      initializer.call
+      yield
 
       merge_formatters(old_formatter, SimpleCov.formatter)
     rescue LoadError => e
-      if e.path == name
-        puts format('Cannot find \'%s\', ignoring', name) if ENV['CI']
-      else
-        raise e
-      end
+      raise e unless e.path == name
+      puts format('Cannot find \'%s\', ignoring', name) if ENV['CI']
     end
 
     private
