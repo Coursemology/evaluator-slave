@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'vcr'
 
 Coursemology::Evaluator::Client.initialize('http://localhost:3000', 'test@example.org',

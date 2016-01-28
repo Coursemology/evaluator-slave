@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec::Matchers.define(:instrument_notification) do |name|
   match do |actual|
     allow(ActiveSupport::Notifications).to receive(:instrument).and_call_original

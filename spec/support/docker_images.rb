@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This caches the results of pulling from Docker Hub for the duration of the test session.
 module DockerImageCache
   def create(hash)

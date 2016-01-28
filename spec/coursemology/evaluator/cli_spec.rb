@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Coursemology::Evaluator::CLI do
   let(:host) { 'http://localhost:3000' }
   let!(:original_api_token) { Coursemology::Evaluator::Models::Base.api_token }

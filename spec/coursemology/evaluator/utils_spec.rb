@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Coursemology::Evaluator::Utils do
   describe '.parse_docker_stream' do
     def build_docker_header(stream, length)

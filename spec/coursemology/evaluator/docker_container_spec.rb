@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Coursemology::Evaluator::DockerContainer do
   let(:image) { 'coursemology/evaluator-image-python:2.7' }
   let(:delete_subject) { true }

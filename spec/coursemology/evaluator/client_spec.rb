@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Coursemology::Evaluator::Client do
   with_mock_client do
     describe '.initialize' do

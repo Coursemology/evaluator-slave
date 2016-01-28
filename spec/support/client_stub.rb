@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::Client
   module TestGroupHelperMethods
     def self.client_options_description(host, api_user_email, api_token)

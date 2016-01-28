@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Polyglot::Language
   # Finds the language class with the specified name.
   #
