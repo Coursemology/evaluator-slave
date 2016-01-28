@@ -17,9 +17,17 @@ RSpec.describe Coursemology::Evaluator::DockerContainer do
   describe '#wait' do
     it 'retries until the container finishes' do
       subject.start!
-      expect(subject).to receive(:refresh!).and_call_original.at_least(:once)
 
-      expect(subject.wait(0)).not_to be_nil
+      called = 0
+      expect(subject.connection).to receive(:post).and_wrap_original do |block, *args|
+        excon_params = args.third
+        excon_params[:read_timeout] = called == 0 ? 0 : nil
+        called += 1
+
+        block.call(*args)
+      end.at_least(:twice)
+
+      expect(subject.wait(0.01)).not_to be_nil
     end
 
     it 'returns the exit code of the container' do

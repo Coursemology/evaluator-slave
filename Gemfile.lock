@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    coursemology-evaluator (0.0.0)
+    coursemology-evaluator (0.1.0)
       activesupport (~> 4.2.0)
       coursemology-polyglot (>= 0.0.3)
       docker-api (>= 1.2.5)
@@ -12,7 +12,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.5)
+    activesupport (4.2.5.1)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -33,7 +33,7 @@ GEM
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    docker-api (1.25.0)
+    docker-api (1.26.0)
       excon (>= 0.38.0)
       json
     domain_name (0.5.25)
@@ -45,7 +45,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.10.0)
       faraday (>= 0.7.4, < 0.10)
-    flexirest (1.2.14)
+    flexirest (1.2.15)
       activesupport
       crack
       faraday
@@ -55,11 +55,11 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     mime-types (2.99)
-    minitest (5.8.3)
+    minitest (5.8.4)
     multi_json (1.11.2)
     multipart-post (2.0.0)
     netrc (0.11.0)
-    rake (10.4.2)
+    rake (10.5.0)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -68,12 +68,12 @@ GEM
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
-    rspec-core (3.4.1)
+    rspec-core (3.4.2)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-mocks (3.4.0)
+    rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
@@ -94,7 +94,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    vcr (3.0.0)
+    vcr (3.0.1)
 
 PLATFORMS
   mswin64
@@ -111,4 +111,4 @@ DEPENDENCIES
   vcr
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
