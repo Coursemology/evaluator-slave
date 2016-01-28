@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::Client
   def self.initialize(host, api_user_email, api_token)
     Coursemology::Evaluator::Models::Base.base_url = host

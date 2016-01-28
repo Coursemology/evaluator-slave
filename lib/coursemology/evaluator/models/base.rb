@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::Models::Base < Flexirest::Base
   class << self
     attr_accessor :api_user_email

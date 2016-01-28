@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Adapter for StringIO for compatibility with RubyZip.
 #
 # StringIO does not inherit from IO, so RubyZip does not accept StringIO in place of IO.

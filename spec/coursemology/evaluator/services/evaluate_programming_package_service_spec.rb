@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageService do
@@ -25,7 +26,7 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     end
 
     context 'when the evaluation has resource limits' do
-      let(:package_params) { [time_limit: 5, memory_limit: 16]  }
+      let(:package_params) { [time_limit: 5, memory_limit: 16] }
 
       it 'specifies them to the container' do
         expect(Coursemology::Evaluator::DockerContainer).to \

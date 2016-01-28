@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::DockerContainer < Docker::Container
   class << self
     def create(image, argv: nil)

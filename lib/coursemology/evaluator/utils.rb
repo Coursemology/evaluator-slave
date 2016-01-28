@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Coursemology::Evaluator::Utils
   # Represents one block of the Docker Attach protocol.
   DockerAttachBlock = Struct.new(:stream, :length, :bytes)
@@ -11,7 +12,7 @@ module Coursemology::Evaluator::Utils
   # @param [String] string The input stream to parse.
   # @return [Array<(String, String, String)>] The stdin, stdout, and stderr output.
   def self.parse_docker_stream(string)
-    result = ['', '', '']
+    result = [''.dup, ''.dup, ''.dup]
     stream = StringIO.new(string)
 
     while (block = parse_docker_stream_read_block(stream))

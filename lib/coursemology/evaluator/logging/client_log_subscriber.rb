@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::Logging::ClientLogSubscriber < ActiveSupport::LogSubscriber
   def publish(name, *args)
     send(name.split('.').first, *args)

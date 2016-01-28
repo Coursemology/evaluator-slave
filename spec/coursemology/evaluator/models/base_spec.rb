@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Coursemology::Evaluator::Models::Base do
   describe 'class attributes' do
     subject { Coursemology::Evaluator::Models::Base }

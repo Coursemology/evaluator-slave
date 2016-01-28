@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ProgrammingEvaluationFactory
   def self.define_package(evaluation)
     file = File.new(File.join(__dir__, '../fixtures/programming_question_template.zip'), 'rb')

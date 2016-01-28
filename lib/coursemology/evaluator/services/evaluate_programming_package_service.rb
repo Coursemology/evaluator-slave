@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
   Result = Struct.new(:stdout, :stderr, :test_report, :exit_code)
 

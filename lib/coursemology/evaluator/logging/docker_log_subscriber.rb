@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Coursemology::Evaluator::Logging::DockerLogSubscriber < ActiveSupport::LogSubscriber
   def pull(event)
     info "#{color("Docker Pull (#{event.duration.round(1)}ms)", GREEN)} #{event.payload[:image]}"
