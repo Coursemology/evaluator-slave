@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    coursemology-evaluator (0.1.0)
+    coursemology-evaluator (0.1.1)
       activesupport (~> 4.2.0)
       coursemology-polyglot (>= 0.0.3)
       docker-api (>= 1.2.5)
@@ -98,6 +98,7 @@ GEM
 
 PLATFORMS
   mswin64
+  ruby
 
 DEPENDENCIES
   bundler
