@@ -36,7 +36,7 @@ GEM
     docker-api (1.26.0)
       excon (>= 0.38.0)
       json
-    domain_name (0.5.25)
+    domain_name (0.5.20160128)
       unf (>= 0.0.5, < 1.0.0)
     excon (0.45.4)
     factory_girl (4.5.0)
@@ -97,7 +97,6 @@ GEM
     vcr (3.0.1)
 
 PLATFORMS
-  mswin64
   ruby
 
 DEPENDENCIES
