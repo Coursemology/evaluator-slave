@@ -34,7 +34,8 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
   # @return [Coursemology::Evaluator::Models::ProgrammingEvaluation::Package]
   def package
     @package ||= begin
-      body = plain_request('courses/assessment/programming_evaluations/:id/package', id: id)
+      body = self.class._plain_request('courses/assessment/programming_evaluations/:id/package',
+                                       :get, id: id)
       Package.new(Coursemology::Evaluator::StringIO.new(body))
     end
   end
@@ -50,18 +51,5 @@ class Coursemology::Evaluator::Models::ProgrammingEvaluation < Coursemology::Eva
     self.stderr = result.stderr
     self.test_report = result.test_report
     self.exit_code = result.exit_code
-  end
-
-  private
-
-  # Performs a plain request.
-  #
-  # @param [String] url The URL to request.
-  # @param [Hash] params The parameter to be part of the request.
-  # @return [String] The response body.
-  def plain_request(url, params = {})
-    request = Flexirest::Request.new({ url: url, method: :get, options: { plain: true } },
-                                     self.class)
-    request.call(params)
   end
 end
