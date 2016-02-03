@@ -7,6 +7,7 @@
 # Ignore bundler config and gems.
 /.bundle
 /vendor/bundle
+/Gemfile.lock
 
 # Ignore user-specific Intellij project files
 /.idea/dictionaries/*

@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'vcr'
 
-  spec.add_dependency 'activesupport', '~> 4.2.0'
+  spec.add_dependency 'activesupport', '~> 4.2.0', '>= 4.2.2'
   spec.add_dependency 'flexirest', '~> 1.2'
   spec.add_dependency 'faraday_middleware'
 
