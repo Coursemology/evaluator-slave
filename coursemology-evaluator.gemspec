@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Coursemology programming package evaluator'
   spec.description   = 'Sets up a consistent environment for evaluating programming packages.'
-  spec.homepage      = 'http://coursemology.org'
+  spec.homepage      = 'https://github.com/Coursemology/evaluator-slave'
   spec.files         = `git ls-files -z`.split("\x0").
                        reject { |f| f.match(/^(test|spec|features)\//) }
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
