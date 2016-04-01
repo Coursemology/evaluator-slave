@@ -17,30 +17,36 @@ class Coursemology::Evaluator::Client
     Signal.trap('SIGTERM', method(:on_sig_term))
 
     loop do
-      allocate_evaluations
-      break if @terminate
+      evaluations = allocate_evaluations
 
-      # :nocov:
-      # This sleep might not be triggered in the specs, because interruptions to the thread is
-      # nondeterministically run by the OS scheduler.
-      sleep(1.minute)
-      # :nocov:
+      if evaluations && !evaluations.empty?
+        on_allocate(evaluations)
+      else
+        # :nocov:
+        # This sleep might not be triggered in the specs, because interruptions to the thread is
+        # nondeterministically run by the OS scheduler.
+        sleep(1.minute)
+        # :nocov:
+      end
+
+      break if @terminate
     end
   end
 
   private
 
   # Requests evaluations from the server.
+  #
+  # @return [Array<Coursemology::Evaluator::Models::ProgrammingEvaluation>] The evaluations
+  #   retrieved from the server.
   def allocate_evaluations
-    evaluations =
-      ActiveSupport::Notifications.instrument('allocate.client.evaluator.coursemology') do
-        languages = Coursemology::Polyglot::Language.concrete_languages.map(&:display_name)
-        Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate(language: languages)
-      end
-
-    on_allocate(evaluations)
+    ActiveSupport::Notifications.instrument('allocate.client.evaluator.coursemology') do
+      languages = Coursemology::Polyglot::Language.concrete_languages.map(&:display_name)
+      Coursemology::Evaluator::Models::ProgrammingEvaluation.allocate(language: languages)
+    end
   rescue Flexirest::HTTPUnauthorisedClientException => e
     ActiveSupport::Notifications.publish('allocate_fail.client.evaluator.coursemology', e: e)
+    nil
   end
 
   # The callback for handling an array of allocated evaluations.

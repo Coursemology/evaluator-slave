@@ -18,6 +18,8 @@ RSpec.describe Coursemology::Evaluator::Client do
   end
 
   describe '#run' do
+    let(:dummy_evaluation) { build_stubbed(:programming_evaluation) }
+
     it 'loops until @terminate is set' do
       expect(subject).to receive(:allocate_evaluations).at_least(:once)
       allow(subject).to receive(:sleep) { sleep(0.1.seconds) }
@@ -25,22 +27,24 @@ RSpec.describe Coursemology::Evaluator::Client do
       Thread.new { subject.instance_variable_set(:@terminate, true) }
       subject.run
     end
+
+    it 'calls #on_allocate with the evaluation' do
+      called = false
+      expect(subject).to receive(:allocate_evaluations) do
+        called ? [] : [dummy_evaluation]
+      end.at_least(:once)
+
+      expect(subject).to receive(:on_allocate).with([dummy_evaluation]).at_least(:once)
+      Thread.new { subject.send(:on_sig_term) }
+      subject.run
+    end
   end
 
   describe '#allocate_evaluations' do
     context 'when an evaluation is provided' do
-      let(:dummy_evaluation) { build_stubbed(:programming_evaluation) }
-      before do
-        expect(Coursemology::Evaluator::Models::ProgrammingEvaluation).to \
-          receive(:allocate).and_return([dummy_evaluation])
-      end
-
-      it 'calls #on_evaluation with the evaluation' do
-        expect(subject).to receive(:on_evaluation).with(dummy_evaluation)
-        subject.send(:allocate_evaluations)
-      end
-
       it 'instruments the allocation request' do
+        expect(Coursemology::Evaluator::Models::ProgrammingEvaluation).to \
+          receive(:allocate).and_return(nil)
         expect { subject.send(:allocate_evaluations) }.to \
           instrument_notification('allocate.client.evaluator.coursemology')
       end
