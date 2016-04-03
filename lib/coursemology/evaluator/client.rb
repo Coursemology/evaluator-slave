@@ -15,25 +15,28 @@ class Coursemology::Evaluator::Client
 
   def run
     Signal.trap('SIGTERM', method(:on_sig_term))
-
-    loop do
-      evaluations = allocate_evaluations
-
-      if evaluations && !evaluations.empty?
-        on_allocate(evaluations)
-      else
-        # :nocov:
-        # This sleep might not be triggered in the specs, because interruptions to the thread is
-        # nondeterministically run by the OS scheduler.
-        sleep(1.minute)
-        # :nocov:
-      end
-
-      break if @terminate
-    end
+    loop(&method(:client_loop))
   end
 
   private
+
+  # Performs one iteration of the client loop.
+  def client_loop
+    evaluations = allocate_evaluations
+    if evaluations && !evaluations.empty?
+      on_allocate(evaluations)
+    else
+      raise StopIteration if @terminate
+
+      # :nocov:
+      # This sleep might not be triggered in the specs, because interruptions to the thread is
+      # nondeterministically run by the OS scheduler.
+      sleep(1.minute)
+      # :nocov:
+    end
+
+    raise StopIteration if @terminate
+  end
 
   # Requests evaluations from the server.
   #
