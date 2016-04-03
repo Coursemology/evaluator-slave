@@ -15,6 +15,24 @@ RSpec.describe Coursemology::Evaluator::DockerContainer do
     end
   end
 
+  describe '.cached' do
+    let(:delete_subject) { false }
+    subject { Coursemology::Evaluator::DockerContainer }
+
+    it 'caches the call' do
+      calls = 0
+      cache_options = { expires_in: 1.second }
+      cache_miss_block = proc { calls += 1 }
+      subject.send(:cached, :test, cache_options, &cache_miss_block)
+      subject.send(:cached, :test, cache_options, &cache_miss_block)
+      expect(calls).to eq(1)
+      sleep(1.second)
+
+      subject.send(:cached, :test, cache_options, &cache_miss_block)
+      expect(calls).to eq(2)
+    end
+  end
+
   describe '#wait' do
     it 'retries until the container finishes' do
       subject.start!

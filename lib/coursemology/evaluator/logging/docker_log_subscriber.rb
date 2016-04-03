@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 class Coursemology::Evaluator::Logging::DockerLogSubscriber < ActiveSupport::LogSubscriber
   def pull(event)
-    info "#{color("Docker Pull (#{event.duration.round(1)}ms)", GREEN)} #{event.payload[:image]}"
+    cached = event.payload[:cached].nil? || event.payload[:cached] ? 'Cached ' : ''
+    header_colour = cached ? GREEN : YELLOW
+    info "#{color("#{cached}Docker Pull (#{event.duration.round(1)}ms)", header_colour)} "\
+      "#{event.payload[:image]}"
   end
 
   def create(event)
