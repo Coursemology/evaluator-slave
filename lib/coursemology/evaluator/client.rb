@@ -9,7 +9,10 @@ class Coursemology::Evaluator::Client
   end
 
   # @param [Boolean] one_shot If the client should only fire one request.
-  def initialize(one_shot = false)
+  # @param [Float] poll_time Sleep time between checks for task allocation.
+  # @param [String] poll_interval Units for poll_time.
+  def initialize(one_shot = false, poll_interval = '10S')
+    @poll_interval = ::ISO8601::Duration.new("PT#{poll_interval}".upcase)
     @terminate = one_shot
   end
 
@@ -31,7 +34,7 @@ class Coursemology::Evaluator::Client
       # :nocov:
       # This sleep might not be triggered in the specs, because interruptions to the thread is
       # nondeterministically run by the OS scheduler.
-      sleep(1.minute)
+      sleep(@poll_interval.to_seconds)
       # :nocov:
     end
 

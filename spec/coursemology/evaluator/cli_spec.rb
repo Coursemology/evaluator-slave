@@ -4,13 +4,21 @@ RSpec.describe Coursemology::Evaluator::CLI do
   let!(:original_api_token) { Coursemology::Evaluator::Models::Base.api_token }
   let(:api_token) { 'abcd' }
   let(:api_user_email) { 'test@example.org' }
+  let(:poll_interval) { '10S' }
   let(:argv) do
+    ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
+     '--one-shot', "--interval=#{poll_interval}"]
+  end
+  let(:argv_missing) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
      '--one-shot']
   end
 
   describe Coursemology::Evaluator::CLI::Options do
-    it { is_expected.to have_attributes(host: nil, api_token: nil, api_user_email: nil) }
+    it 'checks Options attributes' do
+      expect(subject).to have_attributes(host: nil, api_token: nil, api_user_email: nil,
+                                         poll_interval: nil)
+    end
   end
 
   with_mock_client do
@@ -69,6 +77,18 @@ RSpec.describe Coursemology::Evaluator::CLI do
 
     it 'parses api-user-email' do
       expect(subject.api_user_email).to eq(api_user_email)
+    end
+
+    it 'parses poll-interval' do
+      expect(subject.poll_interval).to eq(poll_interval)
+    end
+  end
+
+  describe '#optparse! defaults' do
+    subject { Coursemology::Evaluator::CLI.new.send(:optparse!, argv_missing) }
+
+    it 'sets default value for poll_interval' do
+      expect(subject.poll_interval).to eq('10S')
     end
   end
 end

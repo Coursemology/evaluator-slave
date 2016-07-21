@@ -9,6 +9,7 @@ Docker.validate_version!
 require 'coursemology/polyglot'
 require 'coursemology/polyglot/extensions'
 require 'coursemology/evaluator/version'
+require 'iso8601'
 
 module Coursemology::Evaluator
   extend ActiveSupport::Autoload
