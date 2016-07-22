@@ -4,10 +4,11 @@ RSpec.describe Coursemology::Evaluator::CLI do
   let!(:original_api_token) { Coursemology::Evaluator::Models::Base.api_token }
   let(:api_token) { 'abcd' }
   let(:api_user_email) { 'test@example.org' }
-  let(:poll_interval) { '10S' }
+  let(:poll_interval) { '20S' }
+  let(:cache_expiry) { '2D' }
   let(:argv) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
-     '--one-shot', "--interval=#{poll_interval}"]
+     '--one-shot', "--interval=#{poll_interval}", "--expiry=#{cache_expiry}"]
   end
   let(:argv_missing) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
@@ -17,7 +18,7 @@ RSpec.describe Coursemology::Evaluator::CLI do
   describe Coursemology::Evaluator::CLI::Options do
     it 'checks Options attributes' do
       expect(subject).to have_attributes(host: nil, api_token: nil, api_user_email: nil,
-                                         poll_interval: nil)
+                                         poll_interval: nil, cache_expiry: nil)
     end
   end
 
@@ -82,6 +83,10 @@ RSpec.describe Coursemology::Evaluator::CLI do
     it 'parses poll-interval' do
       expect(subject.poll_interval).to eq(poll_interval)
     end
+
+    it 'parses cache-expiry' do
+      expect(subject.cache_expiry).to eq(cache_expiry)
+    end
   end
 
   describe '#optparse! defaults' do
@@ -89,6 +94,10 @@ RSpec.describe Coursemology::Evaluator::CLI do
 
     it 'sets default value for poll_interval' do
       expect(subject.poll_interval).to eq('10S')
+    end
+
+    it 'sets default value for cache_expiry' do
+      expect(subject.cache_expiry).to eq('1D')
     end
   end
 end

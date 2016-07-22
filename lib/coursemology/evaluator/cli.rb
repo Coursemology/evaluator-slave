@@ -2,7 +2,8 @@
 require 'optparse'
 
 class Coursemology::Evaluator::CLI
-  Options = Struct.new(:host, :api_token, :api_user_email, :one_shot, :poll_interval)
+  Options = Struct.new(:host, :api_token, :api_user_email,
+                       :one_shot, :poll_interval, :image_lifetime)
 
   def self.start(argv)
     new.start(argv)
@@ -14,6 +15,7 @@ class Coursemology::Evaluator::CLI
 
   def run(argv)
     options = optparse!(argv)
+
     Coursemology::Evaluator::Client.initialize(options.host, options.api_user_email,
                                                options.api_token)
     Coursemology::Evaluator::Client.new(options.one_shot, options.poll_interval).run
@@ -30,6 +32,7 @@ class Coursemology::Evaluator::CLI
 
     # default options for optional parameters
     options.poll_interval = '10S'
+    options.cache_expiry = '1D'
     options.one_shot = false
 
     option_parser = OptionParser.new do |parser|
@@ -48,6 +51,10 @@ class Coursemology::Evaluator::CLI
 
       parser.on('-iINTERVAL', '--interval=INTERVAL') do |interval|
         options.poll_interval = interval
+      end
+
+      parser.on('-eEXPIRY', '--expiry=EXPIRY') do |expiry|
+        options.cache_expiry = expiry
       end
 
       parser.on('-o', '--one-shot') do
