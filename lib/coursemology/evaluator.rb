@@ -13,6 +13,7 @@ require 'iso8601'
 
 module Coursemology::Evaluator
   extend ActiveSupport::Autoload
+  include ActiveSupport::Configurable
 
   autoload :Client
   autoload :DockerContainer

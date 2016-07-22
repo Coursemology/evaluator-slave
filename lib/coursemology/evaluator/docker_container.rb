@@ -17,13 +17,14 @@ class Coursemology::Evaluator::DockerContainer < Docker::Container
 
     # Pulls the given image from Docker Hub.
     #
-    # This caches images for 5 minutes, because the overhead for querying for images is quite high.
+    # This caches images for the specified time, because the overhead for querying
+    # for images is quite high.
     #
     # @param [String] image The image to pull.
     def pull_image(image)
       ActiveSupport::Notifications.instrument('pull.docker.evaluator.coursemology',
                                               image: image) do |payload|
-        cached([:image, image], expires_in: 5.minutes) do
+        cached([:image, image], expires_in: Coursemology::Evaluator.config.image_lifetime) do
           Docker::Image.create('fromImage' => image)
           payload[:cached] = false
         end
