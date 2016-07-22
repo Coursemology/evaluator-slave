@@ -33,6 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday_middleware'
 
   spec.add_dependency 'coursemology-polyglot', '>= 0.0.3'
-  spec.add_dependency 'docker-api', '>= 1.2.5'
+  spec.add_dependency 'docker-api', '>= 1.29.1'
   spec.add_dependency 'rubyzip'
 end
