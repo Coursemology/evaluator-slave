@@ -9,11 +9,7 @@ This is the evaluator program which will query Coursemology for pending evaluati
 
 1. Ruby (>= 2.1.0)
 2. Linux (tested on Ubuntu 14.04)
-3. Docker 1.10.x (the user the evaluator runs as must be able to talk to the Docker Remote API endpoint)
-
-The evaluator requires Docker Remote API v1.22 or below. The highest Docker version with that API version
-is Docker 1.10.x. See [this issue](https://github.com/Coursemology/evaluator-slave/issues/49) for the
-full explanation.
+3. Docker (the user the evaluator runs as must be able to talk to the Docker Remote API endpoint)
 
 ### Getting Started
 
