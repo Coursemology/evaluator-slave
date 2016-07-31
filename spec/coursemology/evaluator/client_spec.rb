@@ -19,27 +19,20 @@ RSpec.describe Coursemology::Evaluator::Client do
 
   describe '#run' do
     let(:dummy_evaluation) { build_stubbed(:programming_evaluation) }
+    let(:poll_time) { 300 }
 
-    context 'with custom poll time' do
-      # Client with custom poll interval
-      let(:one_shot) { false }
-      let(:poll_interval) { '5m' }
-      subject(:custom_poll) do
-        Coursemology::Evaluator::Client.new(one_shot, poll_interval)
+    it 'sleeps with the configured poll time' do
+      Coursemology::Evaluator.config.poll_interval = poll_time
+      # Simulate no evaluations
+      expect(subject).to receive(:allocate_evaluations) { [] }
+
+      # Stub sleep to terminate after 1 mock sleep
+      allow(subject).to receive(:sleep) do
+        subject.instance_variable_set(:@terminate, true)
       end
 
-      it 'sleeps with a specified poll time' do
-        # Simulate no evaluations
-        expect(custom_poll).to receive(:allocate_evaluations) { [] }
-
-        # Stub sleep to terminate after 1 mock sleep
-        allow(custom_poll).to receive(:sleep) do
-          custom_poll.instance_variable_set(:@terminate, true)
-        end
-
-        expect(custom_poll).to receive(:sleep).with(300)
-        custom_poll.run
-      end
+      expect(subject).to receive(:sleep).with(poll_time)
+      subject.run
     end
 
     it 'loops until @terminate is set' do
@@ -58,19 +51,6 @@ RSpec.describe Coursemology::Evaluator::Client do
 
       expect(subject).to receive(:on_allocate).with([dummy_evaluation]).at_least(:once)
       Thread.new { subject.send(:on_sig_term) }
-      subject.run
-    end
-
-    it 'sleeps with the default poll time' do
-      # Simulate no evaluations
-      expect(subject).to receive(:allocate_evaluations) { [] }
-
-      # Stub sleep to terminate after 1 mock sleep
-      allow(subject).to receive(:sleep) do
-        subject.instance_variable_set(:@terminate, true)
-      end
-
-      expect(subject).to receive(:sleep).with(10)
       subject.run
     end
   end

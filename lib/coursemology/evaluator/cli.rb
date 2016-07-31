@@ -2,7 +2,8 @@
 require 'optparse'
 
 class Coursemology::Evaluator::CLI
-  Options = Struct.new(:host, :api_token, :api_user_email, :one_shot, :poll_interval)
+  Options = Struct.new(:host, :api_token, :api_user_email,
+                       :one_shot, :poll_interval, :image_lifetime)
 
   def self.start(argv)
     new.start(argv)
@@ -14,9 +15,16 @@ class Coursemology::Evaluator::CLI
 
   def run(argv)
     options = optparse!(argv)
+    Coursemology::Evaluator.config.poll_interval =
+      ::ISO8601::Duration.new("PT#{options.poll_interval}".upcase).to_seconds
+
+    # Must include the time designator T if hours/minutes/seconds are required.
+    Coursemology::Evaluator.config.image_lifetime =
+      ::ISO8601::Duration.new("P#{options.image_lifetime}".upcase).to_seconds
+
     Coursemology::Evaluator::Client.initialize(options.host, options.api_user_email,
                                                options.api_token)
-    Coursemology::Evaluator::Client.new(options.one_shot, options.poll_interval).run
+    Coursemology::Evaluator::Client.new(options.one_shot).run
   end
 
   private
@@ -30,6 +38,7 @@ class Coursemology::Evaluator::CLI
 
     # default options for optional parameters
     options.poll_interval = '10S'
+    options.image_lifetime = '1D'
     options.one_shot = false
 
     option_parser = OptionParser.new do |parser|
@@ -48,6 +57,10 @@ class Coursemology::Evaluator::CLI
 
       parser.on('-iINTERVAL', '--interval=INTERVAL') do |interval|
         options.poll_interval = interval
+      end
+
+      parser.on('-lLIFETIME', '--lifetime=LIFETIME') do |lifetime|
+        options.image_lifetime = lifetime
       end
 
       parser.on('-o', '--one-shot') do

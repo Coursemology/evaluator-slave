@@ -4,10 +4,11 @@ RSpec.describe Coursemology::Evaluator::CLI do
   let!(:original_api_token) { Coursemology::Evaluator::Models::Base.api_token }
   let(:api_token) { 'abcd' }
   let(:api_user_email) { 'test@example.org' }
-  let(:poll_interval) { '10S' }
+  let(:poll_interval) { '20S' }
+  let(:image_lifetime) { '2D' }
   let(:argv) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
-     '--one-shot', "--interval=#{poll_interval}"]
+     '--one-shot', "--interval=#{poll_interval}", "--lifetime=#{image_lifetime}"]
   end
   let(:argv_missing) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
@@ -17,7 +18,7 @@ RSpec.describe Coursemology::Evaluator::CLI do
   describe Coursemology::Evaluator::CLI::Options do
     it 'checks Options attributes' do
       expect(subject).to have_attributes(host: nil, api_token: nil, api_user_email: nil,
-                                         poll_interval: nil)
+                                         poll_interval: nil, image_lifetime: nil)
     end
   end
 
@@ -56,6 +57,20 @@ RSpec.describe Coursemology::Evaluator::CLI do
         end
       end
 
+      it 'sets poll interval in Evaluator configuration' do
+        VCR.use_cassette('client/no_pending_evaluations') do
+          subject
+        end
+        expect(Coursemology::Evaluator.config.poll_interval).to eq(20)
+      end
+
+      it 'sets Docker image lifetime in Evaluator configuration' do
+        VCR.use_cassette('client/no_pending_evaluations') do
+          subject
+        end
+        expect(Coursemology::Evaluator.config.image_lifetime).to eq(60 * 60 * 24 * 2)
+      end
+
       it 'evaluates the package' do
         VCR.use_cassette('client/pending_evaluation') do
           subject
@@ -82,6 +97,10 @@ RSpec.describe Coursemology::Evaluator::CLI do
     it 'parses poll-interval' do
       expect(subject.poll_interval).to eq(poll_interval)
     end
+
+    it 'parses image-lifetime' do
+      expect(subject.image_lifetime).to eq(image_lifetime)
+    end
   end
 
   describe '#optparse! defaults' do
@@ -89,6 +108,10 @@ RSpec.describe Coursemology::Evaluator::CLI do
 
     it 'sets default value for poll_interval' do
       expect(subject.poll_interval).to eq('10S')
+    end
+
+    it 'sets default value for image_lifetime' do
+      expect(subject.image_lifetime).to eq('1D')
     end
   end
 end
