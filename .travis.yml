@@ -14,7 +14,4 @@ bundler_args: "--jobs=3 --retry=3"
 cache: bundler
 
 before_install:
-  - sudo apt-get update
-  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.10.3-0~trusty
   - gem install bundler
-  - docker version
