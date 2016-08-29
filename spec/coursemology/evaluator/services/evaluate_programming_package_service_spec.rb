@@ -120,7 +120,9 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
 
     it 'returns the test report' do
       copy_dummy_report
-      expect(subject.send(:extract_test_report, container)).to eq(report_contents)
+      test_report = subject.send(:extract_test_report, container)
+      expect(test_report).to eq(report_contents)
+      expect(test_report.encoding).to eq Encoding::UTF_8
     end
 
     context 'when running the tests fails' do
