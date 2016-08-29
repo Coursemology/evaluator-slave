@@ -125,7 +125,7 @@ class Coursemology::Evaluator::Services::EvaluateProgrammingPackageService
 
     tar_file = Gem::Package::TarReader.new(stream)
     tar_file.each do |file|
-      return file.read
+      return file.read.force_encoding(Encoding::UTF_8)
     end
   rescue Docker::Error::NotFoundError
     return nil
