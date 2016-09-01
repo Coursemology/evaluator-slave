@@ -107,22 +107,29 @@ RSpec.describe Coursemology::Evaluator::Services::EvaluateProgrammingPackageServ
     let(:report_contents) { File.read(report_path) }
     let(:container) { subject.send(:create_container, image) }
 
-    def copy_dummy_report
+    def copy_report(contents)
       container.start!
       container.wait
-      tar = StringIO.new(Docker::Util.create_tar('report.xml' => report_contents))
+      tar = StringIO.new(Docker::Util.create_tar('report.xml' => contents))
       container.archive_in_stream(Coursemology::Evaluator::Services::
           EvaluateProgrammingPackageService::PACKAGE_PATH) do
         tar.read
       end
     end
+
     after { subject.send(:destroy_container, container) }
 
     it 'returns the test report' do
-      copy_dummy_report
+      copy_report(report_contents)
       test_report = subject.send(:extract_test_report, container)
       expect(test_report).to eq(report_contents)
       expect(test_report.encoding).to eq Encoding::UTF_8
+    end
+
+    it 'does not crash when report is nil' do
+      copy_report(nil)
+      test_report = subject.send(:extract_test_report, container)
+      expect(test_report).to be_nil
     end
 
     context 'when running the tests fails' do
