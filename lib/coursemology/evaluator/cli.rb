@@ -3,7 +3,7 @@ require 'optparse'
 
 class Coursemology::Evaluator::CLI
   Options = Struct.new(:host, :api_token, :api_user_email,
-                       :one_shot, :poll_interval, :image_lifetime)
+                       :one_shot, :poll_interval, :image_lifetime, :sleep_time)
 
   def self.start(argv)
     new.start(argv)
@@ -24,6 +24,9 @@ class Coursemology::Evaluator::CLI
 
     Coursemology::Evaluator::Client.initialize(options.host, options.api_user_email,
                                                options.api_token)
+
+    # Sleep before start
+    sleep(::ISO8601::Duration.new("PT#{options.sleep_time}".upcase).to_seconds)
     Coursemology::Evaluator::Client.new(options.one_shot).run
   end
 
@@ -40,6 +43,7 @@ class Coursemology::Evaluator::CLI
     options.poll_interval = '10S'
     options.image_lifetime = '1D'
     options.one_shot = false
+    options.sleep_time = '0S'
 
     option_parser = OptionParser.new do |parser|
       parser.banner = "Usage: #{parser.program_name} [options]"
@@ -65,6 +69,10 @@ class Coursemology::Evaluator::CLI
 
       parser.on('-o', '--one-shot') do
         options.one_shot = true
+      end
+
+      parser.on('-sSLEEP', '--sleep=SLEEPTIME') do |sleeptime|
+        options.sleep_time = sleeptime
       end
     end
 
