@@ -50,3 +50,8 @@ Time options are expected to be strings in [ISO8601 format](https://en.wikipedia
   E.g. `1DT2H5M10S`
 
 3. `--one-shot`: Runs once and terminates. Primarily used for testing.
+
+4. `--sleep`: Length of time to sleep before the first check for programming allocations.
+  This time is expected to be short and has the same restrictions as those for `--interval`.
+
+  Useful for staggering the start times of multiple processes when managed with systemd.

@@ -6,9 +6,11 @@ RSpec.describe Coursemology::Evaluator::CLI do
   let(:api_user_email) { 'test@example.org' }
   let(:poll_interval) { '20S' }
   let(:image_lifetime) { '2D' }
+  let(:sleep_time) { '5S' }
   let(:argv) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
-     '--one-shot', "--interval=#{poll_interval}", "--lifetime=#{image_lifetime}"]
+     '--one-shot', "--interval=#{poll_interval}", "--lifetime=#{image_lifetime}",
+     "--sleep=#{sleep_time}"]
   end
   let(:argv_missing) do
     ["--host=#{host}", "--api-token=#{api_token}", "--api-user-email=#{api_user_email}",
@@ -18,7 +20,7 @@ RSpec.describe Coursemology::Evaluator::CLI do
   describe Coursemology::Evaluator::CLI::Options do
     it 'checks Options attributes' do
       expect(subject).to have_attributes(host: nil, api_token: nil, api_user_email: nil,
-                                         poll_interval: nil, image_lifetime: nil)
+                                         poll_interval: nil, image_lifetime: nil, sleep_time: nil)
     end
   end
 
@@ -101,6 +103,10 @@ RSpec.describe Coursemology::Evaluator::CLI do
     it 'parses image-lifetime' do
       expect(subject.image_lifetime).to eq(image_lifetime)
     end
+
+    it 'parses sleep-time' do
+      expect(subject.sleep_time).to eq(sleep_time)
+    end
   end
 
   describe '#optparse! defaults' do
@@ -112,6 +118,10 @@ RSpec.describe Coursemology::Evaluator::CLI do
 
     it 'sets default value for image_lifetime' do
       expect(subject.image_lifetime).to eq('1D')
+    end
+
+    it 'sets default value for sleep_time' do
+      expect(subject.sleep_time).to eq('0S')
     end
   end
 end
